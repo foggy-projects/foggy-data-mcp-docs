@@ -1,0 +1,14 @@
+{
+  "name": "foggy-data-mcp-docs",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Foggy Data MCP Documentation Site",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "node scripts/copy-downloads.js && vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^1.5.0"
+  }
+}
