@@ -25,9 +25,14 @@ export const queryModel = {
 |-------|------|----------|-------------|
 | `name` | string | Yes | Unique query model identifier |
 | `caption` | string | No | Display name |
+| `description` | string | No | Model description (used for AI analysis context) |
 | `model` | string/array | Yes | Associated TM model (single or multiple) |
+| `loader` | string | No | Loader version (`"v2"` for V2 loader) |
 | `columnGroups` | array | No | Column group definitions |
 | `orders` | array | No | Default sorting |
+| `conds` | array | No | Pre-defined query conditions, see [Chapter 9](#_9-pre-defined-query-conditions-conds) |
+| `accesses` | array | No | Access control list, see [Authorization](../api/authorization.md) |
+| `deprecated` | boolean | No | Mark as deprecated |
 
 ---
 
@@ -157,8 +162,17 @@ When `ref` points to a dimension (without `$` suffix), it auto-expands to two co
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `ref` | object | Yes | Field reference (using loadTableModel proxy) |
+| `name` | string | No | Column unique identifier (defaults to ref) |
 | `caption` | string | No | Override display name from TM |
+| `description` | string | No | Column description (for AI analysis context) |
 | `alias` | string | No | Output column alias |
+| `formula` | string | No | QM calculated field formula |
+| `type` | string | No | Calculated field return type |
+| `partitionBy` | string[] | No | Window function PARTITION BY list |
+| `windowOrderBy` | object[] | No | Window function ORDER BY |
+| `windowFrame` | string | No | Window frame definition |
+| `ai` | object | No | AI configuration (enabled, prompt, levels) |
+| `deprecated` | boolean | No | Mark as deprecated |
 | `ui` | object | No | UI configuration |
 
 ### 4.4 UI Configuration
@@ -473,14 +487,117 @@ export const queryModel = {
 
 ---
 
-## 9. Naming Conventions
+## 9. Pre-defined Query Conditions (conds)
 
-### 9.1 File Naming
+Pre-defined query conditions allow declaring commonly used filter conditions in QM, so clients can use them directly without manually building slices.
+
+### 9.1 Basic Structure
+
+```javascript
+export const queryModel = {
+    name: 'FactOrderQueryModel',
+    model: fo,
+
+    conds: [
+        {
+            name: 'orderStatus',
+            field: 'orderStatus',
+            type: 'DICT',
+            queryType: '='
+        },
+        {
+            name: 'orderDateRange',
+            field: 'orderDate$caption',
+            type: 'DATE_RANGE',
+            queryType: '[)'
+        },
+        {
+            name: 'customerType',
+            field: 'customer$customerType',
+            type: 'DIM',
+            queryType: '='
+        },
+        {
+            name: 'minAmount',
+            field: 'totalAmount',
+            type: 'DOUBLE',
+            queryType: '>='
+        }
+    ],
+
+    columnGroups: [...]
+};
+```
+
+### 9.2 Condition Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Condition name |
+| `field` | string | Yes | Corresponding query field |
+| `column` | string | No | Corresponding database column name |
+| `type` | string | No | Condition type |
+| `queryType` | string | No | Default query operator |
+
+### 9.3 Condition Types (type)
+
+| Type | Description | Use Case |
+|------|-------------|----------|
+| `DICT` | Dictionary type | Fields with dictionary mappings |
+| `DIM` | Dimension type | Dimension attribute filtering |
+| `BOOL` | Boolean type | Yes/No filtering |
+| `DATE_RANGE` | Date range | Date interval filtering |
+| `DAY_RANGE` | Day range | Day interval filtering |
+| `COMMON` | Common type | Default type |
+| `DOUBLE` | Double | Numeric range filtering |
+| `INTEGER` | Integer | Integer value filtering |
+
+---
+
+## 10. Window Function Columns
+
+Column items support window function configuration, allowing window calculations to be defined directly in QM:
+
+```javascript
+columnGroups: [
+    {
+        caption: 'Ranking Analysis',
+        items: [
+            { ref: fo.salesDate },
+            { ref: fo.product },
+            { ref: fo.salesAmount },
+            {
+                name: 'salesRank',
+                caption: 'Sales Rank',
+                formula: 'RANK()',
+                partitionBy: ['salesDate$caption'],
+                windowOrderBy: [{ field: 'salesAmount', dir: 'desc' }]
+            },
+            {
+                name: 'movingAvg7d',
+                caption: '7-Day Moving Average',
+                formula: 'AVG(salesAmount)',
+                partitionBy: ['product$id'],
+                windowOrderBy: [{ field: 'salesDate$caption', dir: 'asc' }],
+                windowFrame: 'ROWS BETWEEN 6 PRECEDING AND CURRENT ROW'
+            }
+        ]
+    }
+]
+```
+
+> Window functions compute independently on each row and do not trigger GROUP BY. See [DSL Query Syntax - Window Functions](./query-dsl.md#_6-3-supported-expressions) for details.
+
+---
+
+## 11. Naming Conventions
+
+### 11.1 File Naming
 
 - QM files: `{TMModelName}QueryModel.qm`
 - Example: `FactOrderQueryModel.qm`
 
-### 9.2 Model Naming
+### 11.2 Model Naming
 
 - Query model name: `{TMModelName}QueryModel`
 - Example: `FactOrderQueryModel`

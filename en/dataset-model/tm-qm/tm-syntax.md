@@ -35,6 +35,10 @@ export const model = {
 | `idColumn` | string | No | Primary key column name |
 | `type` | string | No | Model type: `jdbc` (default), `mongo`, or `vector` |
 | `deprecated` | boolean | No | Mark as deprecated, default false |
+| `dataSourceName` | string | No | Named data source reference, supports different models using different data sources |
+| `autoLoadDimensions` | boolean | No | Auto-load dimension definitions |
+| `autoLoadMeasures` | boolean | No | Auto-load measure definitions |
+| `preAggregations` | array | No | Pre-aggregation configuration list, see [Chapter 11](#11-pre-aggregations-preaggregations) |
 
 > ¹ `tableName` and `viewSql` are mutually exclusive, `tableName` takes precedence
 
@@ -116,12 +120,47 @@ dimensions: [
 | `schema` | string | No | Dimension table schema |
 | `foreignKey` | string | Yes | Foreign key field in fact table |
 | `primaryKey` | string | Yes | Primary key field in dimension table |
-| `captionColumn` | string | No | Display field, used for `dimension$caption` |
+| `captionColumn` | string | No | Display field for `dimension$caption` (simple form) |
+| `captionDef` | object | No | Caption advanced definition (higher priority than captionColumn), see below |
 | `keyCaption` | string | No | Primary key display name, default `${caption}Key` |
 | `keyDescription` | string | No | Primary key description |
-| `type` | string | No | Dimension type, e.g., `DATETIME` for time dimension |
+| `type` | string | No | Dimension type: `NORMAL`/`DAY`/`DATETIME`/`DICT`/`BOOL`/`INTEGER`/`DOUBLE` |
 | `properties` | array | No | Queryable properties from dimension table |
 | `forceIndex` | string | No | Force specific index name |
+| `alias` | string | No | Dimension alias (redefine column name prefix) |
+| `deprecated` | boolean | No | Mark as deprecated |
+| `dimensionDataSql` | function | No | Dimension data SQL function (for access control) |
+| `onBuilder` | function | No | Dimension join builder function |
+
+> **`DAY` vs `DATETIME`**: `DAY` contains only the date part (yyyy-MM-dd), `DATETIME` contains both date and time (yyyy-MM-dd HH:mm:ss).
+
+#### captionDef Advanced Definition
+
+When `captionColumn` is not sufficient (e.g., formulas across database dialects), use `captionDef`:
+
+```javascript
+{
+    name: 'orderDate',
+    captionDef: {
+        // Method 1: Universal formula (applies to all dialects)
+        formulaDef: {
+            value: 'DATE_FORMAT(order_date, "%Y-%m")'
+        },
+
+        // Method 2: Dialect-specific formula (highest priority)
+        dialectFormulaDef: {
+            mysql: { value: 'DATE_FORMAT(order_date, "%Y-%m")' },
+            postgresql: { value: "TO_CHAR(order_date, 'YYYY-MM')" },
+            sqlserver: { value: "FORMAT(order_date, 'yyyy-MM')" }
+        },
+
+        // Method 3: Direct column reference (lowest priority)
+        column: 'order_date'
+    }
+}
+```
+
+**Priority**: `dialectFormulaDef` > `formulaDef` > `column` > outer `captionColumn`
 
 > ¹ `tableName` and `viewSql` are mutually exclusive, `tableName` takes precedence
 
@@ -1391,10 +1430,158 @@ export const model = {
 
 ---
 
+## 11. Pre-Aggregations (preAggregations)
+
+Pre-aggregations significantly improve query performance in large data scenarios by pre-computing and storing aggregated results.
+
+### 11.1 Basic Structure
+
+```javascript
+export const model = {
+    name: 'FactSalesModel',
+    tableName: 'fact_sales',
+
+    preAggregations: [
+        {
+            name: 'daily_product_sales',
+            caption: 'Daily Product Pre-aggregation',
+            tableName: 'preagg_daily_product_sales',
+            priority: 80,
+            enabled: true,
+
+            dimensions: ['product', 'salesDate'],
+            granularity: {
+                salesDate: 'day'            // Time dimension granularity
+            },
+
+            measures: [
+                { name: 'salesAmount', aggregation: 'SUM' },
+                { name: 'salesQuantity', aggregation: 'SUM' },
+                { name: 'salesAmount', aggregation: 'COUNT', columnName: 'sales_count' }
+            ],
+
+            filters: [
+                { field: 'orderStatus', op: '=', value: 'COMPLETED' }
+            ],
+
+            refresh: {
+                strategy: 'INCREMENTAL',
+                schedule: '0 2 * * *',      // Daily at 2am
+                watermarkColumn: 'salesDate$caption',
+                lookbackDays: 3
+            }
+        }
+    ],
+
+    dimensions: [...],
+    measures: [...]
+};
+```
+
+### 11.2 Pre-Aggregation Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Pre-aggregation name (unique within model) |
+| `caption` | string | No | Display name |
+| `tableName` | string | Yes | Pre-aggregation table name |
+| `schema` | string | No | Database schema (defaults to main table schema) |
+| `priority` | number | No | Priority 1-100 (default 50, higher = preferred match) |
+| `enabled` | boolean | No | Whether enabled (default true) |
+| `dimensions` | string[] | Yes | List of included dimension names |
+| `granularity` | object | No | Time dimension granularity configuration |
+| `measures` | array | Yes | Measure definition list |
+| `filters` | array | No | Permanent filter conditions |
+| `refresh` | object | No | Refresh configuration |
+
+### 11.3 Time Granularity (granularity)
+
+| Granularity | Description |
+|-------------|-------------|
+| `minute` | Minute |
+| `hour` | Hour |
+| `day` | Day |
+| `week` | Week |
+| `month` | Month |
+| `quarter` | Quarter |
+| `year` | Year |
+
+### 11.4 Measure Definitions (measures)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Reference to TM measure name |
+| `aggregation` | string | Yes | Aggregation method (SUM/COUNT/MIN/MAX/AVG) |
+| `columnName` | string | No | Column name in pre-aggregation table (default `name_aggregation`) |
+
+### 11.5 Refresh Configuration (refresh)
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `strategy` | string | No | `FULL` (full) / `INCREMENTAL` (incremental), default FULL |
+| `schedule` | string | No | Cron expression |
+| `watermarkColumn` | string | No | Watermark column name (for incremental refresh) |
+| `lookbackDays` | number | No | Lookback days (handles late-arriving data) |
+
+### 11.6 Matching Rules
+
+The system automatically matches pre-aggregation tables during queries. Matching conditions:
+1. Query dimensions are a subset of pre-aggregation dimensions
+2. Query time granularity >= pre-aggregation time granularity
+3. Query measures and aggregation methods are compatible with pre-aggregation
+4. Query conditions do not conflict with pre-aggregation filters
+
+When multiple pre-aggregations match, the one with higher `priority` is preferred.
+
+---
+
+## 12. Access Control
+
+Access control is configured in QM, but relies on TM dimension definitions for row-level/column-level data security.
+
+### 12.1 Dimension Data SQL
+
+Define `dimensionDataSql` in dimensions to dynamically generate data permission SQL:
+
+```javascript
+{
+    name: 'store',
+    tableName: 'dim_store',
+    foreignKey: 'store_key',
+    primaryKey: 'store_key',
+    captionColumn: 'store_name',
+
+    // Return accessible dimension data SQL based on current user
+    dimensionDataSql: (context) => {
+        return `SELECT store_key FROM user_store_permission WHERE user_id = '${context.userId}'`;
+    }
+}
+```
+
+### 12.2 Named Data Sources
+
+When different models need to connect to different databases, use `dataSourceName`:
+
+```javascript
+export const model = {
+    name: 'FactOrderModel',
+    tableName: 'fact_orders',
+    dataSourceName: 'orderDb',  // Reference named data source in configuration
+
+    dimensions: [...],
+    measures: [...]
+};
+```
+
+> `dataSourceName` takes priority over the global default data source. The corresponding named data source must be registered in the application configuration.
+
+---
+
 ## Next Steps
 
 - [QM Syntax Manual](./qm-syntax.md) - Query model definition
 - [Query DSL](./query-dsl.md) - Complete query DSL syntax
 - [Parent-Child Dimensions](./parent-child.md) - Hierarchy dimension details
 - [Calculated Fields](./calculated-fields.md) - Complex calculation logic
+- [Pre-Aggregation](../advanced/pre-aggregation.md) - Detailed pre-aggregation configuration
 - [Query API](../api/query-api.md) - HTTP API reference

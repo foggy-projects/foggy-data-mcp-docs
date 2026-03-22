@@ -35,6 +35,10 @@ export const model = {
 | `idColumn` | string | 否 | 主键列名                       |
 | `type` | string | 否 | 模型类型，默认 `jdbc`、`mongo`、`vector` |
 | `deprecated` | boolean | 否 | 标记为废弃，默认 false             |
+| `dataSourceName` | string | 否 | 命名数据源引用，支持不同模型使用不同数据源 |
+| `autoLoadDimensions` | boolean | 否 | 自动加载维度定义 |
+| `autoLoadMeasures` | boolean | 否 | 自动加载度量定义 |
+| `preAggregations` | array | 否 | 预聚合配置列表，详见[第11章](#_11-预聚合-preaggregations) |
 
 > ¹ `tableName` 和 `viewSql` 二选一，优先使用 `tableName`
 
@@ -116,12 +120,47 @@ dimensions: [
 | `schema` | string | 否 | 维度表的 Schema |
 | `foreignKey` | string | 是 | 事实表中的外键字段 |
 | `primaryKey` | string | 是 | 维度表的主键字段 |
-| `captionColumn` | string | 否 | 维度的显示字段，用于 `维度名$caption` |
+| `captionColumn` | string | 否 | 维度的显示字段，用于 `维度名$caption`（简单形式） |
+| `captionDef` | object | 否 | Caption 高级定义（优先级高于 captionColumn），见下文 |
 | `keyCaption` | string | 否 | 主键字段的显示名称，默认为 `${caption}Key` |
 | `keyDescription` | string | 否 | 主键字段的描述信息 |
-| `type` | string | 否 | 维度类型，如 `DATETIME` 表示时间维度 |
+| `type` | string | 否 | 维度类型：`NORMAL`/`DAY`/`DATETIME`/`DICT`/`BOOL`/`INTEGER`/`DOUBLE` |
 | `properties` | array | 否 | 维度表中可查询的属性列表 |
 | `forceIndex` | string | 否 | 强制使用的索引名称 |
+| `alias` | string | 否 | 维度别名（重定义列名前缀） |
+| `deprecated` | boolean | 否 | 标记为废弃 |
+| `dimensionDataSql` | function | 否 | 维度数据 SQL 函数（用于访问控制） |
+| `onBuilder` | function | 否 | 维度连接构建函数 |
+
+> **`DAY` vs `DATETIME`**：`DAY` 仅包含日期部分（yyyy-MM-dd），`DATETIME` 包含日期和时间（yyyy-MM-dd HH:mm:ss）。
+
+#### captionDef 高级定义
+
+当 `captionColumn` 不够用时（例如需要跨数据库方言的公式），可以使用 `captionDef`：
+
+```javascript
+{
+    name: 'orderDate',
+    captionDef: {
+        // 方式1：通用公式（所有方言生效）
+        formulaDef: {
+            value: 'DATE_FORMAT(order_date, "%Y-%m")'
+        },
+
+        // 方式2：方言专属公式（优先级最高）
+        dialectFormulaDef: {
+            mysql: { value: 'DATE_FORMAT(order_date, "%Y-%m")' },
+            postgresql: { value: "TO_CHAR(order_date, 'YYYY-MM')" },
+            sqlserver: { value: "FORMAT(order_date, 'yyyy-MM')" }
+        },
+
+        // 方式3：直接列引用（最低优先级）
+        column: 'order_date'
+    }
+}
+```
+
+**优先级**：`dialectFormulaDef` > `formulaDef` > `column` > 外层 `captionColumn`
 
 > ¹ `tableName` 和 `viewSql` 二选一，优先使用 `tableName`
 
@@ -1441,10 +1480,158 @@ export const model = {
 
 ---
 
+## 11. 预聚合 (preAggregations)
+
+预聚合通过预先计算和存储聚合结果，显著提升大数据量场景下的查询性能。
+
+### 11.1 基本结构
+
+```javascript
+export const model = {
+    name: 'FactSalesModel',
+    tableName: 'fact_sales',
+
+    preAggregations: [
+        {
+            name: 'daily_product_sales',
+            caption: '按日-产品预聚合',
+            tableName: 'preagg_daily_product_sales',
+            priority: 80,
+            enabled: true,
+
+            dimensions: ['product', 'salesDate'],
+            granularity: {
+                salesDate: 'day'            // 时间维度粒度
+            },
+
+            measures: [
+                { name: 'salesAmount', aggregation: 'SUM' },
+                { name: 'salesQuantity', aggregation: 'SUM' },
+                { name: 'salesAmount', aggregation: 'COUNT', columnName: 'sales_count' }
+            ],
+
+            filters: [
+                { field: 'orderStatus', op: '=', value: 'COMPLETED' }
+            ],
+
+            refresh: {
+                strategy: 'INCREMENTAL',
+                schedule: '0 2 * * *',      // 每天凌晨2点
+                watermarkColumn: 'salesDate$caption',
+                lookbackDays: 3
+            }
+        }
+    ],
+
+    dimensions: [...],
+    measures: [...]
+};
+```
+
+### 11.2 预聚合字段
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `name` | string | 是 | 预聚合名称（模型内唯一） |
+| `caption` | string | 否 | 显示名称 |
+| `tableName` | string | 是 | 预聚合表名 |
+| `schema` | string | 否 | 数据库 schema（默认使用主表 schema） |
+| `priority` | number | 否 | 优先级 1-100（默认 50，越高越优先匹配） |
+| `enabled` | boolean | 否 | 是否启用（默认 true） |
+| `dimensions` | string[] | 是 | 包含的维度名称列表 |
+| `granularity` | object | 否 | 时间维度粒度配置 |
+| `measures` | array | 是 | 度量定义列表 |
+| `filters` | array | 否 | 永久过滤条件 |
+| `refresh` | object | 否 | 刷新配置 |
+
+### 11.3 时间粒度 (granularity)
+
+| 粒度值 | 说明 |
+|--------|------|
+| `minute` | 分钟 |
+| `hour` | 小时 |
+| `day` | 天 |
+| `week` | 周 |
+| `month` | 月 |
+| `quarter` | 季度 |
+| `year` | 年 |
+
+### 11.4 度量定义 (measures)
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `name` | string | 是 | 引用 TM 中的度量名称 |
+| `aggregation` | string | 是 | 聚合方式（SUM/COUNT/MIN/MAX/AVG） |
+| `columnName` | string | 否 | 预聚合表中的列名（默认 `name_aggregation`） |
+
+### 11.5 刷新配置 (refresh)
+
+| 字段 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `strategy` | string | 否 | `FULL`（全量）/ `INCREMENTAL`（增量），默认 FULL |
+| `schedule` | string | 否 | Cron 表达式 |
+| `watermarkColumn` | string | 否 | 水位线列名（增量刷新用） |
+| `lookbackDays` | number | 否 | 回溯天数（处理迟到数据） |
+
+### 11.6 匹配规则
+
+查询时系统自动匹配预聚合表，匹配条件：
+1. 查询涉及的维度是预聚合维度的子集
+2. 查询的时间粒度 >= 预聚合的时间粒度
+3. 查询的度量和聚合方式与预聚合兼容
+4. 查询条件不与预聚合的 filters 冲突
+
+多个预聚合匹配时，优先使用 `priority` 较高的。
+
+---
+
+## 12. 访问控制 (accesses)
+
+访问控制在 QM 中配置，但依赖 TM 中的维度定义实现行级/列级数据安全。
+
+### 12.1 维度数据 SQL
+
+在维度中定义 `dimensionDataSql`，用于动态生成数据权限 SQL：
+
+```javascript
+{
+    name: 'store',
+    tableName: 'dim_store',
+    foreignKey: 'store_key',
+    primaryKey: 'store_key',
+    captionColumn: 'store_name',
+
+    // 根据当前用户返回可访问的维度数据SQL
+    dimensionDataSql: (context) => {
+        return `SELECT store_key FROM user_store_permission WHERE user_id = '${context.userId}'`;
+    }
+}
+```
+
+### 12.2 命名数据源
+
+当不同模型需要连接不同数据库时，使用 `dataSourceName`：
+
+```javascript
+export const model = {
+    name: 'FactOrderModel',
+    tableName: 'fact_orders',
+    dataSourceName: 'orderDb',  // 引用配置中的命名数据源
+
+    dimensions: [...],
+    measures: [...]
+};
+```
+
+> `dataSourceName` 的优先级高于全局默认数据源。需在应用配置中注册对应的命名数据源。
+
+---
+
 ## 下一步
 
 - [QM 语法手册](./qm-syntax.md) - 查询模型定义
 - [JSON 查询 DSL](./query-dsl.md) - 查询 DSL 完整语法
 - [父子维度](./parent-child.md) - 层级结构维度详解
 - [计算字段](./calculated-fields.md) - 复杂计算逻辑
+- [预聚合](../advanced/pre-aggregation.md) - 预聚合详细配置
 - [查询 API](../api/query-api.md) - HTTP API 接口
