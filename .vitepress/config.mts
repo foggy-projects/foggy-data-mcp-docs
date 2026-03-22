@@ -176,11 +176,13 @@ export default defineConfig({
       link: '/en/',
       themeConfig: {
         nav: [
+          { text: 'Quick Start', link: '/en/mcp/guide/quick-start' },
           {
             text: 'Docs',
             items: [
               { text: 'FSScript Engine', link: '/en/fsscript/guide/introduction' },
-              { text: 'Dataset Modeling', link: '/en/dataset/guide/introduction' },
+              { text: 'Dataset Query', link: '/en/dataset-query/guide/introduction' },
+              { text: 'Dataset Modeling', link: '/en/dataset-model/guide/introduction' },
               { text: 'MCP Service', link: '/en/mcp/guide/introduction' }
             ]
           },
@@ -231,31 +233,56 @@ export default defineConfig({
               ]
             }
           ],
-          '/en/dataset/': [
+          '/en/dataset-query/': [
             {
               text: 'Getting Started',
               items: [
-                { text: 'Introduction', link: '/en/dataset/guide/introduction' },
-                { text: 'Quick Start', link: '/en/dataset/guide/quick-start' },
-                { text: 'Core Concepts', link: '/en/dataset/guide/concepts' },
-                { text: 'Claude Skills', link: '/en/dataset/guide/claude-skills' }
-              ]
-            },
-            {
-              text: 'TM/QM Modeling',
-              items: [
-                { text: 'TM Syntax Manual', link: '/en/dataset/tm-qm/tm-syntax' },
-                { text: 'QM Syntax Manual', link: '/en/dataset/tm-qm/qm-syntax' },
-                { text: 'Calculated Fields', link: '/en/dataset/tm-qm/calculated-fields' },
-                { text: 'Parent-Child Dimension', link: '/en/dataset/tm-qm/parent-child' }
+                { text: 'Introduction', link: '/en/dataset-query/guide/introduction' },
+                { text: 'Quick Start', link: '/en/dataset-query/guide/quick-start' },
+                { text: 'Multi-Database Support', link: '/en/dataset-query/guide/multi-database' }
               ]
             },
             {
               text: 'API Reference',
               items: [
-                { text: 'Query API', link: '/en/dataset/api/query-api' },
-                { text: 'Authorization (QM)', link: '/en/dataset/api/authorization' },
-                { text: 'Java Authorization', link: '/en/dataset/api/java-authorization' }
+                { text: 'Query API', link: '/en/dataset-query/api/query-api' },
+                { text: 'Dialect Extensions', link: '/en/dataset-query/api/dialect' }
+              ]
+            }
+          ],
+          '/en/dataset-model/': [
+            {
+              text: 'Getting Started',
+              items: [
+                { text: 'Introduction', link: '/en/dataset-model/guide/introduction' },
+                { text: 'Quick Start', link: '/en/dataset-model/guide/quick-start' },
+                { text: 'Core Concepts', link: '/en/dataset-model/guide/concepts' },
+                { text: 'Claude Skills', link: '/en/dataset-model/guide/claude-skills' }
+              ]
+            },
+            {
+              text: 'TM/QM Modeling',
+              items: [
+                { text: 'TM Syntax Manual', link: '/en/dataset-model/tm-qm/tm-syntax' },
+                { text: 'QM Syntax Manual', link: '/en/dataset-model/tm-qm/qm-syntax' },
+                { text: 'JSON Query DSL', link: '/en/dataset-model/tm-qm/query-dsl' },
+                { text: 'Calculated Fields', link: '/en/dataset-model/tm-qm/calculated-fields' },
+                { text: 'Parent-Child Dimension', link: '/en/dataset-model/tm-qm/parent-child' }
+              ]
+            },
+            {
+              text: 'API Reference',
+              items: [
+                { text: 'Query API', link: '/en/dataset-model/api/query-api' },
+                { text: 'Authorization (QM)', link: '/en/dataset-model/api/authorization' },
+                { text: 'Java Authorization', link: '/en/dataset-model/api/java-authorization' }
+              ]
+            },
+            {
+              text: 'Advanced',
+              items: [
+                { text: 'Query Cache', link: '/en/dataset-model/advanced/cache' },
+                { text: 'Pre-Aggregation', link: '/en/dataset-model/advanced/pre-aggregation' }
               ]
             }
           ],
