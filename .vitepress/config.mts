@@ -6,7 +6,8 @@ export default defineConfig({
   base: '/foggy-data-mcp-docs/',
   ignoreDeadLinks: [
     /^https?:\/\/localhost/,
-    /api\//
+    /api\//,
+    /advanced\/pre-aggregation/
   ],
 
   head: [
