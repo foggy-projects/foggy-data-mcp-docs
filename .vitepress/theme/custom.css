@@ -475,3 +475,119 @@
   border-color: var(--foggy-accent);
   transform: translateY(-1px);
 }
+
+.landing-shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2rem;
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .path-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.path-card {
+  display: block;
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+  text-decoration: none !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.path-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--foggy-accent);
+  box-shadow: 0 14px 36px rgba(102, 126, 234, 0.14);
+}
+
+.path-card h3 {
+  margin: 0.35rem 0 0.75rem !important;
+  border: none !important;
+  padding: 0 !important;
+  color: var(--vp-c-text-1);
+}
+
+.path-card p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+}
+
+.path-card-highlight {
+  background:
+    linear-gradient(135deg, rgba(102,126,234,0.07), rgba(16,185,129,0.08)),
+    var(--vp-c-bg-soft);
+}
+
+.path-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(102, 126, 234, 0.1);
+  color: var(--foggy-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.path-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--foggy-accent);
+  font-weight: 600;
+}
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 900px) {
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.use-case-card {
+  padding: 1.5rem;
+  border-radius: 14px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg-soft);
+}
+
+.use-case-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--foggy-gradient-soft);
+  font-size: 1.35rem;
+}
+
+.use-case-card h3 {
+  margin: 0.9rem 0 0.6rem !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 1.05rem;
+}
+
+.use-case-card p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.92rem;
+}
