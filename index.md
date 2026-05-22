@@ -3,11 +3,14 @@ layout: home
 hero:
   name: Foggy Data MCP
   text: Stop Letting AI Write SQL Directly
-  tagline: Use a semantic layer and MCP tools to let AI query business data safely, with permissions, business meaning, and multi-database support built in.
+  tagline: Use a semantic layer and MCP tools so AI queries business data through governed models, permissions, and multi-database execution.
   actions:
     - theme: brand
       text: 中文快速开始
       link: /zh/mcp/guide/quick-start
+    - theme: alt
+      text: LLM 语义层白皮书
+      link: /zh/whitepaper/
     - theme: alt
       text: English Quick Start
       link: /en/mcp/guide/quick-start
@@ -17,8 +20,8 @@ hero:
 
 features:
   - icon: 🔒
-    title: Safer Than Raw SQL
-    details: AI sends JSON DSL and MCP tool calls, not handwritten SQL. Keep dangerous operations and schema leakage out of the prompt.
+    title: Governed Query Contract
+    details: AI sends JSON DSL and MCP tool calls, not handwritten SQL. Keep physical schema details and ad hoc database access out of the prompt.
   - icon: 🧠
     title: Business Semantics First
     details: TM/QM models expose dimensions, measures, permissions, and field meaning so AI works with business concepts instead of raw tables.
@@ -71,7 +74,7 @@ features:
     <ul>
       <li>AI calls MCP tools and sends JSON DSL instead of raw SQL</li>
       <li>TM/QM models define business fields, relationships, and access rules</li>
-      <li>The engine handles JOINs, dialect translation, and query safety</li>
+      <li>The engine handles JOINs, dialect translation, and query governance</li>
       <li>You can ship one governed interface to multiple AI clients</li>
     </ul>
   </div>
@@ -134,7 +137,7 @@ MySQL / PostgreSQL / SQL Server / SQLite / MongoDB
 <div class="pillars">
   <div class="pillar">
     <span class="pillar-tag tag-semantic">SECURITY</span>
-    <h3>Keep AI Away From Raw SQL</h3>
+    <h3>Use a Governed Query Contract</h3>
     <ul>
       <li>Read-only query flow</li>
       <li>Permission injection before execution</li>

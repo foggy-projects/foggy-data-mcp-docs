@@ -4,6 +4,9 @@ export default defineConfig({
   title: 'Foggy Data MCP',
   description: 'Embedded semantic layer framework for AI-driven data analysis',
   base: '/foggy-data-mcp-docs/',
+  srcExclude: [
+    'zh/whitepaper/foggy-data-mcp-whitepaper-review.md'
+  ],
   ignoreDeadLinks: [
     /^https?:\/\/localhost/,
     /api\//,
@@ -28,7 +31,8 @@ export default defineConfig({
               { text: 'FSScript 脚本引擎', link: '/zh/fsscript/guide/introduction' },
               { text: '数据查询', link: '/zh/dataset-query/guide/introduction' },
               { text: '数据建模', link: '/zh/dataset-model/guide/introduction' },
-              { text: 'MCP 服务', link: '/zh/mcp/guide/introduction' }
+              { text: 'MCP 服务', link: '/zh/mcp/guide/introduction' },
+              { text: 'LLM 语义层白皮书', link: '/zh/whitepaper/' }
             ]
           },
           {
@@ -158,6 +162,20 @@ export default defineConfig({
                 { text: 'Claude Desktop', link: '/zh/mcp/integration/claude-desktop' },
                 { text: 'Cursor', link: '/zh/mcp/integration/cursor' },
                 { text: 'API 调用', link: '/zh/mcp/integration/api' }
+              ]
+            }
+          ],
+          '/zh/whitepaper/': [
+            {
+              text: 'LLM 语义层白皮书',
+              items: [
+                { text: '概览', link: '/zh/whitepaper/' },
+                { text: '技术白皮书', link: '/zh/whitepaper/foggy-data-mcp-technical-whitepaper' },
+                { text: 'TM/QM 定义总览', link: '/zh/whitepaper/semantic-layer-syntax-reference' },
+                { text: 'TM 定义参考', link: '/zh/whitepaper/tm-definition-reference' },
+                { text: 'QM 定义参考', link: '/zh/whitepaper/qm-definition-reference' },
+                { text: 'JSON Query DSL 语法参考', link: '/zh/whitepaper/query-dsl-syntax-reference' },
+                { text: '预聚合能力参考', link: '/zh/whitepaper/pre-aggregation-reference' }
               ]
             }
           ]
@@ -316,7 +334,7 @@ export default defineConfig({
                 { text: 'API Usage', link: '/en/mcp/integration/api' }
               ]
             }
-          ]
+          ],
         }
       }
     }
