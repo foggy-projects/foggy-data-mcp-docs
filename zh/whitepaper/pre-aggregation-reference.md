@@ -73,21 +73,21 @@ preAggregations: [
 
 ### 4.1 顶层属性
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `name` | string | 是 | 预聚合定义名称 |
-| `caption` | string | 否 | 显示名称 |
-| `tableName` | string | 是 | 预聚合物理表名 |
-| `schema` | string | 否 | 预聚合表 schema |
-| `priority` | number | 否 | 匹配优先级，数值越高越优先 |
-| `dimensions` | string[] | 否 | 预聚合表覆盖的维度 |
-| `granularity` | object | 否 | 时间维度粒度映射 |
-| `dimensionProperties` | object | 否 | 预聚合表覆盖的维度属性 |
-| `dimensionPropertyColumnNames` | object | 否 | 维度属性到预聚合表物理列的映射 |
-| `measures` | array | 否 | 预聚合表覆盖的指标 |
-| `filters` | array | 否 | 预聚合表内置过滤条件元数据 |
-| `refresh` | object | 否 | 刷新策略元数据 |
-| `enabled` | boolean | 否 | 是否启用，默认启用 |
+| 属性 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `name` | string | 是 | 无 | 预聚合定义名称 |
+| `caption` | string | 否 | 无 | 显示名称 |
+| `tableName` | string | 是 | 无 | 预聚合物理表名 |
+| `schema` | string | 否 | 主表 schema 或数据源默认 schema | 预聚合表 schema |
+| `priority` | number | 否 | `50` | 匹配优先级，数值越高越优先 |
+| `dimensions` | string[] | 否 | 无 | 预聚合表覆盖的维度 |
+| `granularity` | object | 否 | 无 | 时间维度粒度映射 |
+| `dimensionProperties` | object | 否 | 无 | 预聚合表覆盖的维度属性 |
+| `dimensionPropertyColumnNames` | object | 否 | 无 | 维度属性到预聚合表物理列的映射 |
+| `measures` | array | 否 | 无 | 预聚合表覆盖的指标 |
+| `filters` | array | 否 | 无 | 预聚合表内置过滤条件元数据 |
+| `refresh` | object | 否 | 无 | 刷新策略元数据 |
+| `enabled` | boolean | 否 | `true` | 是否启用 |
 
 ### 4.2 指标属性
 
@@ -101,12 +101,12 @@ preAggregations: [
 
 ### 4.3 刷新属性
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `strategy` | string | 否 | 刷新策略，常见值为 `FULL`、`INCREMENTAL` |
-| `schedule` | string | 否 | 调度表达式或宿主约定的调度标识 |
-| `watermarkColumn` | string | 否 | 增量刷新或 hybrid 查询使用的水位字段 |
-| `lookbackDays` | number | 否 | 增量刷新回看天数 |
+| 属性 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `strategy` | string | 否 | `FULL` | 刷新策略，常见值为 `FULL`、`INCREMENTAL` |
+| `schedule` | string | 否 | 无 | 调度表达式或宿主约定的调度标识 |
+| `watermarkColumn` | string | 否 | 无 | 增量刷新或 hybrid 查询使用的水位字段 |
+| `lookbackDays` | number | 否 | 无 | 增量刷新回看天数 |
 
 刷新元数据本身不会让表自动存在。实际项目需要由工程侧创建预聚合表，并通过刷新任务、调度服务或外部数据作业维护其中的数据。
 

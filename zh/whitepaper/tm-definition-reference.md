@@ -33,7 +33,7 @@ export const model = {
 | `viewSql` | string | 否¹ | 视图 SQL，与 `tableName` 二选一 |
 | `schema` | string | 否 | 数据库 schema |
 | `idColumn` | string | 否 | 主键列名 |
-| `type` | string | 否 | 模型类型，常见值为 `jdbc`、`mongo`、`vector` |
+| `type` | string | 否 | 模型类型，常见值为 `jdbc`、`mongo`、`vector`；未配置时默认为 `jdbc` |
 | `dataSource` | object | 否 | 宿主注入的数据源对象；公开模型通常优先使用 `dataSourceName` |
 | `dataSourceName` | string | 否 | 命名数据源引用 |
 | `mongoTemplate` | string | 否 | MongoDB 模板或连接配置引用，`type: 'mongo'` 时使用 |
@@ -42,10 +42,10 @@ export const model = {
 | `properties` | array | 否 | 非聚合字段定义 |
 | `measures` | array | 否 | 可聚合指标定义 |
 | `preAggregations` | array | 否 | 预聚合定义，详见 [预聚合能力参考](./pre-aggregation-reference.md) |
-| `autoLoadDimensions` | boolean | 否 | 是否自动加载维度 |
-| `autoLoadMeasures` | boolean | 否 | 是否自动加载度量 |
+| `autoLoadDimensions` | boolean | 否 | 是否自动加载维度；未配置时为 `false` |
+| `autoLoadMeasures` | boolean | 否 | 是否自动加载度量；未配置时为 `false` |
 | `ai` | object | 否 | 模型级 AI 元数据配置 |
-| `deprecated` | boolean | 否 | 是否标记为废弃 |
+| `deprecated` | boolean | 否 | 是否标记为废弃；未配置时为 `false` |
 | `extData` | object | 否 | 自定义扩展元数据 |
 
 ¹ `tableName` 和 `viewSql` 通常二选一。
@@ -86,9 +86,9 @@ dimensions: [
 | `primaryKey` | string | 是 | 维度表主键列 |
 | `captionColumn` | string | 否 | `维度名$caption` 对应的显示列 |
 | `captionDef` | object | 否 | caption 的公式或方言定义 |
-| `keyCaption` | string | 否 | 维度主键显示名称 |
+| `keyCaption` | string | 否 | 维度主键显示名称；未配置时通常由维度显示名派生 |
 | `keyDescription` | string | 否 | 维度主键描述 |
-| `type` | string | 否 | 维度类型，如 `NORMAL`、`DAY`、`DATETIME`、`DICT`、`BOOL`、`DOUBLE`、`INTEGER` |
+| `type` | string | 否 | 维度类型，如 `NORMAL`、`DAY`、`DATETIME`、`DICT`、`BOOL`、`DOUBLE`、`INTEGER`；未配置时按普通维度处理 |
 | `properties` | array | 否 | 维度属性列表 |
 | `dimensions` | array | 否 | 嵌套子维度列表 |
 | `alias` | string | 否 | 维度别名，用于缩短引用路径 |
@@ -97,7 +97,7 @@ dimensions: [
 | `onBuilder` | function | 否 | 自定义关联条件构建函数 |
 | `memberPermission` | object | 否 | 维度成员查询权限，见 [2.5](#_2-5-维度成员权限) |
 | `ai` | object | 否 | 维度级 AI 元数据配置 |
-| `deprecated` | boolean | 否 | 是否废弃 |
+| `deprecated` | boolean | 否 | 是否废弃；未配置时为 `false` |
 | `extData` | object | 否 | 自定义扩展元数据 |
 
 ¹ `tableName` 和 `viewSql` 通常二选一。
@@ -237,7 +237,7 @@ properties: [
 | `semanticUnit` | string | 否 | 缩放后的语义单位，如 `yuan` |
 | `semanticUnitLabel` | string | 否 | 语义单位显示名，如 `元` |
 | `ai` | object | 否 | AI 元数据配置 |
-| `deprecated` | boolean | 否 | 是否废弃 |
+| `deprecated` | boolean | 否 | 是否废弃；未配置时为 `false` |
 | `extData` | object | 否 | 自定义扩展元数据 |
 
 ## 4. 指标定义
@@ -270,7 +270,7 @@ measures: [
 | `semanticUnit` | string | 否 | 缩放后的语义单位，如 `yuan` |
 | `semanticUnitLabel` | string | 否 | 语义单位显示名，如 `元` |
 | `ai` | object | 否 | AI 元数据配置 |
-| `deprecated` | boolean | 否 | 是否废弃 |
+| `deprecated` | boolean | 否 | 是否废弃；未配置时为 `false` |
 | `extData` | object | 否 | 自定义扩展元数据 |
 
 ¹ `count` 类型指标可以不绑定具体 `column`。

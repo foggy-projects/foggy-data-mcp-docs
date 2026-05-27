@@ -25,23 +25,23 @@ export const queryModel = {
 
 ### 1.1 queryModel 顶层属性
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `name` | string | 是 | QM 唯一标识 |
-| `caption` | string | 否 | 显示名称 |
-| `description` | string | 否 | 查询模型语义描述 |
-| `model` | object | 是 | 关联的主 TM，通常为 `loadTableModel` 返回值 |
-| `joins` | array | 否 | 多模型 QM 的显式关联定义 |
-| `loader` | string | 否 | 加载器版本 |
-| `dataSource` | object | 否 | 宿主注入的数据源对象；公开模型通常使用 TM 的 `dataSourceName` |
-| `columnGroups` | array | 否 | 查询字段分组 |
-| `orders` | array | 否 | 默认排序 |
-| `conds` | array | 否 | 预定义查询条件 |
-| `accesses` | array | 否 | 行级权限或查询增强规则 |
-| `memberPermissions` | array | 否 | 覆盖 TM 维度成员权限 |
-| `ai` | object | 否 | 查询模型级 AI 元数据配置 |
-| `deprecated` | boolean | 否 | 是否废弃 |
-| `extData` | object | 否 | 自定义扩展元数据 |
+| 属性 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `name` | string | 是 | 无 | QM 唯一标识 |
+| `caption` | string | 否 | 无 | 显示名称 |
+| `description` | string | 否 | 无 | 查询模型语义描述 |
+| `model` | object | 是 | 无 | 关联的主 TM，通常为 `loadTableModel` 返回值 |
+| `joins` | array | 否 | 无 | 多模型 QM 的显式关联定义 |
+| `loader` | string | 否 | `v1` | 加载器版本；未配置或配置为 `v1` 时使用原有加载逻辑，`v2` 支持 `TableModelProxy` 和 `ColumnRef` |
+| `dataSource` | object | 否 | 无 | 宿主注入的数据源对象；公开模型通常使用 TM 的 `dataSourceName` |
+| `columnGroups` | array | 否 | 无 | 查询字段分组 |
+| `orders` | array | 否 | 无 | 默认排序 |
+| `conds` | array | 否 | 无 | 预定义查询条件 |
+| `accesses` | array | 否 | 无 | 行级权限或查询增强规则 |
+| `memberPermissions` | array | 否 | 无 | 覆盖 TM 维度成员权限 |
+| `ai` | object | 否 | 无 | 查询模型级 AI 元数据配置 |
+| `deprecated` | boolean | 否 | `false` | 是否废弃 |
+| `extData` | object | 否 | 无 | 自定义扩展元数据 |
 
 ## 2. 模型绑定
 
@@ -111,20 +111,20 @@ columnGroups: [
 
 ### 3.2 column item 属性
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `ref` | object/string | 否¹ | TM 字段引用，推荐使用 `loadTableModel` 返回的字段引用 |
-| `name` | string | 否¹ | 输出字段名或计算字段名 |
-| `caption` | string | 否 | 覆盖显示名称 |
-| `description` | string | 否 | 字段说明 |
-| `alias` | string | 否 | 输出别名 |
-| `formula` | string | 否 | QM 计算字段公式 |
-| `type` | string | 否 | 计算字段返回类型 |
-| `partitionBy` | string[] | 否 | 窗口函数分区字段 |
-| `windowOrderBy` | object[] | 否 | 窗口函数排序字段 |
-| `windowFrame` | string | 否 | 窗口帧定义 |
-| `emptyDefault` | any | 否 | 计算字段为空时的默认值，常用于 `COALESCE` |
-| `ai` | object | 否 | AI 元数据配置 |
+| 属性 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `ref` | object/string | 否¹ | 无 | TM 字段引用，推荐使用 `loadTableModel` 返回的字段引用 |
+| `name` | string | 否¹ | 普通字段可由 `ref` 派生 | 输出字段名或计算字段名；计算字段通常需要显式提供 |
+| `caption` | string | 否 | 无 | 覆盖显示名称 |
+| `description` | string | 否 | 无 | 字段说明 |
+| `alias` | string | 否 | 可由 `ref` 派生 | 输出别名；未配置时通常使用 `ref` 的字段名 |
+| `formula` | string | 否 | 无 | QM 计算字段公式 |
+| `type` | string | 否 | 无 | 计算字段返回类型 |
+| `partitionBy` | string[] | 否 | 无 | 窗口函数分区字段 |
+| `windowOrderBy` | object[] | 否 | 无 | 窗口函数排序字段 |
+| `windowFrame` | string | 否 | 无 | 窗口帧定义 |
+| `emptyDefault` | any | 否 | 无 | 计算字段为空时的默认值，常用于 `COALESCE` |
+| `ai` | object | 否 | 无 | AI 元数据配置 |
 
 ¹ 普通字段通常使用 `ref`；计算字段通常使用 `name + formula`。
 
@@ -161,13 +161,13 @@ orders: [
 ]
 ```
 
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `name` | string | 否¹ | 排序字段名 |
-| `ref` | object/string | 否¹ | 排序字段引用，支持 `loadTableModel` 字段引用或字符串 |
-| `order` | string | 是 | `asc` 或 `desc` |
-| `nullLast` | boolean | 否 | 空值排在最后 |
-| `nullFirst` | boolean | 否 | 空值排在最前 |
+| 属性 | 类型 | 必填 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `name` | string | 否¹ | 无 | 排序字段名 |
+| `ref` | object/string | 否¹ | 无 | 排序字段引用，支持 `loadTableModel` 字段引用或字符串 |
+| `order` | string | 是 | 无 | `asc` 或 `desc` |
+| `nullLast` | boolean | 否 | `false` | 空值排在最后 |
+| `nullFirst` | boolean | 否 | `false` | 空值排在最前 |
 
 ¹ `name` 和 `ref` 至少提供一个；同时提供时以 `ref` 为准。
 
