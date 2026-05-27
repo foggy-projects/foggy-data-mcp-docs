@@ -92,7 +92,6 @@ dimensions: [
 | `properties` | array | 否 | 维度属性列表 |
 | `dimensions` | array | 否 | 嵌套子维度列表 |
 | `alias` | string | 否 | 维度别名，用于缩短引用路径 |
-| `joinTo` | string | 否 | 兼容旧模型的关联目标字段；新模型优先使用嵌套维度结构表达层级 |
 | `forceIndex` | string | 否 | 强制索引名称 |
 | `dimensionDataSql` | function | 否 | 维度数据权限 SQL 生成函数 |
 | `onBuilder` | function | 否 | 自定义关联条件构建函数 |
@@ -146,14 +145,32 @@ dimensions: [
 
 父子维度用于组织架构、品类树等层级结构。
 
+父子维度依赖闭包表表达祖先和后代关系。维度主表仍提供成员本身的 `primaryKey`、`captionColumn` 和普通属性；闭包表提供层级关系，供成员查询和 DSL 层级操作使用。
+
+```javascript
+{
+    name: 'team',
+    caption: '团队',
+    tableName: 'dim_team',
+    foreignKey: 'team_id',
+    primaryKey: 'id',
+    captionColumn: 'name',
+    closureTableName: 'dim_team_closure',
+    parentKey: 'ancestor_id',
+    childKey: 'descendant_id'
+}
+```
+
 | 属性 | 类型 | 必填 | 说明 |
 |------|------|------|------|
-| `closureTableName` | string | 是 | 闭包表名称 |
-| `closureTableSchema` | string | 否 | 闭包表 schema |
-| `parentKey` | string | 是 | 闭包表祖先列 |
-| `childKey` | string | 是 | 闭包表后代列 |
+| `closureTableName` | string | 是 | 闭包表名称，用于存储祖先和后代关系 |
+| `closureTableSchema` | string | 否 | 闭包表 schema；未配置时使用当前维度或数据源默认 schema |
+| `parentKey` | string | 是 | 闭包表祖先列，指向维度主表的 `primaryKey` |
+| `childKey` | string | 是 | 闭包表后代列，指向维度主表的 `primaryKey` |
 
-父子维度配合 DSL 的 `childrenOf`、`descendantsOf`、`selfAndDescendantsOf` 等操作符使用。
+父子维度配合 DSL 的 `childrenOf`、`descendantsOf`、`selfAndDescendantsOf` 等操作符使用。是否允许这些层级操作，可以通过 `memberPermission.patch.hierarchyEnabled` 和 `memberPermission.patch.allowedHierarchyOps` 控制。
+
+建模时需要确保闭包表中至少能表达直接父子和自包含关系；如果宿主系统只维护邻接表，需要先由同步任务或数据库作业生成闭包表。
 
 ### 2.5 维度成员权限
 
@@ -347,11 +364,11 @@ measures: [
 
 `ai` 用于补充面向 LLM 的字段说明。
 
-| 属性 | 类型 | 说明 |
-|------|------|------|
-| `enabled` | boolean | 是否向 AI 上下文暴露 |
-| `prompt` | string | 供 AI 使用的语义提示 |
-| `levels` | number[] | 字段可见或推荐等级 |
+| 属性 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `enabled` | boolean | `true` | 是否向 AI 上下文暴露；显式设为 `false` 时不暴露 |
+| `prompt` | string | 无 | 供 AI 使用的语义提示；填写后可作为字段说明的补充或替代 |
+| `levels` | number[] | `[1]` | 字段可见或推荐等级 |
 
 ## 6. 数据类型
 
