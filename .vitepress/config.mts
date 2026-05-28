@@ -120,6 +120,14 @@ export default defineConfig({
               ]
             },
             {
+              text: 'Compose Query',
+              items: [
+                { text: 'DSL 配置式手册', link: '/zh/dataset-model/compose-query/dsl-manual' },
+                { text: '链式 API 手册', link: '/zh/dataset-model/compose-query/api-manual' },
+                { text: 'Pivot 多维透视', link: '/zh/dataset-model/compose-query/pivot' }
+              ]
+            },
+            {
               text: 'API 参考',
               items: [
                 { text: '查询 API', link: '/zh/dataset-model/api/query-api' },
@@ -169,13 +177,19 @@ export default defineConfig({
             {
               text: 'LLM 语义层白皮书',
               items: [
-                { text: '概览', link: '/zh/whitepaper/' },
-                { text: '技术白皮书', link: '/zh/whitepaper/foggy-data-mcp-technical-whitepaper' },
-                { text: 'TM/QM 定义总览', link: '/zh/whitepaper/semantic-layer-syntax-reference' },
-                { text: 'TM 定义参考', link: '/zh/whitepaper/tm-definition-reference' },
-                { text: 'QM 定义参考', link: '/zh/whitepaper/qm-definition-reference' },
-                { text: 'JSON Query DSL 语法参考', link: '/zh/whitepaper/query-dsl-syntax-reference' },
-                { text: '预聚合能力参考', link: '/zh/whitepaper/pre-aggregation-reference' }
+                { text: '版本入口', link: '/zh/whitepaper/' }
+              ]
+            },
+            {
+              text: 'v1.0',
+              items: [
+                { text: '概览', link: '/zh/whitepaper/v1.0/' },
+                { text: '技术白皮书', link: '/zh/whitepaper/v1.0/foggy-data-mcp-technical-whitepaper' },
+                { text: 'TM/QM 定义总览', link: '/zh/whitepaper/v1.0/semantic-layer-syntax-reference' },
+                { text: 'TM 定义参考', link: '/zh/whitepaper/v1.0/tm-definition-reference' },
+                { text: 'QM 定义参考', link: '/zh/whitepaper/v1.0/qm-definition-reference' },
+                { text: 'JSON Query DSL 语法参考', link: '/zh/whitepaper/v1.0/query-dsl-syntax-reference' },
+                { text: '预聚合能力参考', link: '/zh/whitepaper/v1.0/pre-aggregation-reference' }
               ]
             }
           ]
@@ -287,6 +301,14 @@ export default defineConfig({
                 { text: 'JSON Query DSL', link: '/en/dataset-model/tm-qm/query-dsl' },
                 { text: 'Calculated Fields', link: '/en/dataset-model/tm-qm/calculated-fields' },
                 { text: 'Parent-Child Dimension', link: '/en/dataset-model/tm-qm/parent-child' }
+              ]
+            },
+            {
+              text: 'Compose Query',
+              items: [
+                { text: 'DSL Manual', link: '/en/dataset-model/compose-query/dsl-manual' },
+                { text: 'Chain API Manual', link: '/en/dataset-model/compose-query/api-manual' },
+                { text: 'Pivot', link: '/en/dataset-model/compose-query/pivot' }
               ]
             },
             {

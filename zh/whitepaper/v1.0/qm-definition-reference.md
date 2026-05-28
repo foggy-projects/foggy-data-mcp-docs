@@ -2,7 +2,7 @@
 
 本文面向需要编写或审查 Foggy Query Model（QM）的开发者，按定义对象和属性组织当前公开查询模型契约。TM 定义请参考 [TM 定义参考](./tm-definition-reference.md)，运行时查询语法请参考 [JSON Query DSL 语法参考](./query-dsl-syntax-reference.md)。
 
-QM 是面向 LLM、应用和工具协议的查询契约。它基于一个或多个 TM，选择对外暴露的字段，定义计算字段、默认排序、预定义条件和治理规则。DSL 查询只能引用当前 QM 暴露的语义字段，而不是任意 TM 字段或数据库物理列。
+QM 是面向 LLM、应用和工具协议的查询契约。它基于一个或多个 TM，选择对外暴露的字段，定义计算字段、默认排序和治理规则。DSL 查询只能引用当前 QM 暴露的语义字段，而不是任意 TM 字段或数据库物理列。
 
 ## 1. QM 文件结构
 
@@ -18,7 +18,6 @@ export const queryModel = {
 
     columnGroups: [],
     orders: [],
-    conds: [],
     accesses: []
 };
 ```
@@ -36,7 +35,6 @@ export const queryModel = {
 | `dataSource` | object | 否 | 无 | 宿主注入的数据源对象；公开模型通常使用 TM 的 `dataSourceName` |
 | `columnGroups` | array | 否 | 无 | 查询字段分组 |
 | `orders` | array | 否 | 无 | 默认排序 |
-| `conds` | array | 否 | 无 | 预定义查询条件 |
 | `accesses` | array | 否 | 无 | 行级权限或查询增强规则 |
 | `memberPermissions` | array | 否 | 无 | 覆盖 TM 维度成员权限 |
 | `ai` | object | 否 | 无 | 查询模型级 AI 元数据配置 |
@@ -120,13 +118,17 @@ columnGroups: [
 | `alias` | string | 否 | 可由 `ref` 派生 | 输出别名；未配置时通常使用 `ref` 的字段名 |
 | `formula` | string | 否 | 无 | QM 计算字段公式 |
 | `type` | string | 否 | 无 | 计算字段返回类型 |
-| `partitionBy` | string[] | 否 | 无 | 窗口函数分区字段 |
-| `windowOrderBy` | object[] | 否 | 无 | 窗口函数排序字段 |
-| `windowFrame` | string | 否 | 无 | 窗口帧定义 |
+| `partitionBy` | string[] | 否 | 无 | `formula` 计算字段的窗口函数分区字段 |
+| `windowOrderBy` | object[] | 否 | 无 | `formula` 计算字段的窗口函数排序字段 |
+| `windowFrame` | string | 否 | 无 | `formula` 计算字段的窗口帧定义 |
 | `emptyDefault` | any | 否 | 无 | 计算字段为空时的默认值，常用于 `COALESCE` |
 | `ai` | object | 否 | 无 | AI 元数据配置 |
 
 ¹ 普通字段通常使用 `ref`；计算字段通常使用 `name + formula`。
+
+`partitionBy`、`windowOrderBy` 和 `windowFrame` 只用于带 `formula` 的 QM 计算字段。加载时这类列项会被转换为计算字段，执行时引擎先编译 `formula` 表达式，再按这些配置追加 `OVER (PARTITION BY ... ORDER BY ... frame)` 窗口子句。普通 `ref` 字段不会因为声明这些属性而变成窗口字段。
+
+窗口配置引用的字段必须能被当前 QM 解析。`windowOrderBy.dir` 未配置时按升序处理；`windowFrame` 当前按 SQL frame 字符串透传给查询引擎。后续版本可以考虑把窗口配置作为 formula 能力的一部分统一包装，而不是作为 column item 的独立属性长期暴露。
 
 ## 4. 字段引用
 
@@ -151,7 +153,7 @@ QM 中通常通过 `loadTableModel` 的代理对象引用字段。
 
 DSL 请求应使用当前 QM 暴露的最终字段名。例如当前 QM 暴露 `product_category$caption` 时，DSL 中应引用 `product_category$caption`，而不是物理列名或未暴露的 TM 内部路径。
 
-## 5. 默认排序与预定义条件
+## 5. 默认排序
 
 ### 5.1 orders
 
@@ -170,20 +172,6 @@ orders: [
 | `nullFirst` | boolean | 否 | `false` | 空值排在最前 |
 
 ¹ `name` 和 `ref` 至少提供一个；同时提供时以 `ref` 为准。
-
-### 5.2 conds
-
-`conds` 用于描述查询条件元数据，常用于 UI 或工具侧展示可筛选字段。
-
-| 属性 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `name` | string | 是 | 条件名称 |
-| `field` | string | 是 | 对应查询字段 |
-| `column` | string | 否 | 对应物理列 |
-| `type` | string | 否 | 条件类型 |
-| `queryType` | string | 否 | 默认查询操作符 |
-
-常见 `type`：`DICT`、`DIM`、`BOOL`、`DATE_RANGE`、`DAY_RANGE`、`COMMON`、`DOUBLE`、`INTEGER`。
 
 ## 6. 权限与治理属性
 
