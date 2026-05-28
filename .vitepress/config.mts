@@ -1,6 +1,13 @@
 import { defineConfig } from 'vitepress'
 
 const siteBase = '/foggy-data-mcp-docs/'
+const languageSwitch = {
+  text: '中文 / EN',
+  items: [
+    { text: 'English', link: '/' },
+    { text: '简体中文', link: '/zh/' }
+  ]
+}
 
 export default defineConfig({
   title: 'Foggy Data MCP',
@@ -37,6 +44,7 @@ export default defineConfig({
               { text: 'LLM 语义层白皮书', link: '/zh/whitepaper/' }
             ]
           },
+          languageSwitch,
           {
             text: 'GitHub',
             items: [
@@ -222,6 +230,7 @@ export default defineConfig({
               { text: 'MCP Service', link: '/en/mcp/guide/introduction' }
             ]
           },
+          languageSwitch,
           {
             text: 'GitHub',
             items: [
@@ -366,6 +375,10 @@ export default defineConfig({
   },
 
   themeConfig: {
+    nav: [
+      languageSwitch
+    ],
+
     socialLinks: [
       { icon: 'github', link: 'https://github.com/foggy-projects/foggy-data-mcp-docs' }
     ],
