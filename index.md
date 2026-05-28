@@ -86,7 +86,7 @@ features:
 </div>
 
 <div class="path-grid">
-  <a href="/zh/mcp/guide/quick-start" class="path-card">
+  <a href="./zh/mcp/guide/quick-start.html" class="path-card">
     <span class="path-tag">GENERAL MCP</span>
     <h3>通用数据语义层</h3>
     <p>适合要把 AI 安全接到业务库、报表库或分析库的团队。先跑通 MCP、DSL、图表和多数据库能力。</p>
@@ -196,12 +196,12 @@ MySQL / PostgreSQL / SQL Server / SQLite / MongoDB
 </div>
 
 <div class="lang-cards">
-  <a href="/zh/" class="lang-card">
+  <a href="./zh/" class="lang-card">
     <span class="lang-icon">🇨🇳</span>
     <span class="lang-name">简体中文</span>
     <span class="lang-desc">中文文档与示例</span>
   </a>
-  <a href="/en/" class="lang-card">
+  <a href="./en/" class="lang-card">
     <span class="lang-icon">🇺🇸</span>
     <span class="lang-name">English</span>
     <span class="lang-desc">English docs and references</span>
@@ -224,8 +224,8 @@ MySQL / PostgreSQL / SQL Server / SQLite / MongoDB
   <h2>Start With One Demo, Not a Huge Platform Rollout</h2>
   <p>The fastest path is to publish one visible scenario, one short video, and one reproducible quick start. Then iterate from real user questions.</p>
   <div class="cta-buttons">
-    <a href="/zh/" class="cta-btn-primary">中文文档</a>
-    <a href="/en/" class="cta-btn-secondary">English Docs</a>
+    <a href="./zh/" class="cta-btn-primary">中文文档</a>
+    <a href="./en/" class="cta-btn-secondary">English Docs</a>
     <a href="https://github.com/foggy-projects/foggy-data-mcp-bridge" class="cta-btn-secondary" target="_blank">GitHub</a>
   </div>
 </div>

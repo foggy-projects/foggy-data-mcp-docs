@@ -1,9 +1,11 @@
 import { defineConfig } from 'vitepress'
 
+const siteBase = '/foggy-data-mcp-docs/'
+
 export default defineConfig({
   title: 'Foggy Data MCP',
   description: 'Embedded semantic layer framework for AI-driven data analysis',
-  base: '/foggy-data-mcp-docs/',
+  base: siteBase,
   srcExclude: [
     'zh/whitepaper/foggy-data-mcp-whitepaper-review.md'
   ],
@@ -14,7 +16,7 @@ export default defineConfig({
   ],
 
   head: [
-    ['link', { rel: 'icon', href: '/logo.png' }]
+    ['link', { rel: 'icon', href: `${siteBase}logo.png` }]
   ],
 
   locales: {
@@ -363,8 +365,6 @@ export default defineConfig({
   },
 
   themeConfig: {
-    logo: '/logo.png',
-
     socialLinks: [
       { icon: 'github', link: 'https://github.com/foggy-projects/foggy-data-mcp-docs' }
     ],

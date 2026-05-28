@@ -143,33 +143,33 @@ features:
     <span class="pillar-tag tag-semantic">SEMANTIC LAYER</span>
     <h3>🧠 语义建模</h3>
     <ul>
-      <li><a href="/zh/dataset-model/tm-qm/tm-syntax">TM 表模型</a> — 维度、度量、属性</li>
-      <li><a href="/zh/dataset-model/tm-qm/qm-syntax">QM 查询模型</a> — 列定义、排序、权限</li>
-      <li><a href="/zh/dataset-model/tm-qm/calculated-fields">计算字段</a> — 派生指标和表达式</li>
-      <li><a href="/zh/dataset-model/tm-qm/parent-child">父子维度</a> — 层级和闭包表</li>
-      <li><a href="/zh/dataset-model/advanced/pre-aggregation">预聚合</a> — 加速大数据量查询</li>
+      <li><a href="./dataset-model/tm-qm/tm-syntax.html">TM 表模型</a> — 维度、度量、属性</li>
+      <li><a href="./dataset-model/tm-qm/qm-syntax.html">QM 查询模型</a> — 列定义、排序、权限</li>
+      <li><a href="./dataset-model/tm-qm/calculated-fields.html">计算字段</a> — 派生指标和表达式</li>
+      <li><a href="./dataset-model/tm-qm/parent-child.html">父子维度</a> — 层级和闭包表</li>
+      <li><a href="./dataset-model/advanced/pre-aggregation.html">预聚合</a> — 加速大数据量查询</li>
     </ul>
   </div>
   <div class="pillar">
     <span class="pillar-tag tag-dsl">QUERY DSL</span>
     <h3>🔍 DSL 查询</h3>
     <ul>
-      <li><a href="/zh/dataset-model/tm-qm/query-dsl">JSON Query DSL</a> — 声明式查询语法</li>
+      <li><a href="./dataset-model/tm-qm/query-dsl.html">JSON Query DSL</a> — 声明式查询语法</li>
       <li>20+ 操作符（含 NOT LIKE、层级）</li>
       <li>54+ 内置函数（数学、日期、字符串）</li>
       <li>窗口函数（ROW_NUMBER、LAG 等）</li>
-      <li><a href="/zh/dataset-query/guide/multi-database">多方言 SQL 生成</a></li>
+      <li><a href="./dataset-query/guide/multi-database.html">多方言 SQL 生成</a></li>
     </ul>
   </div>
   <div class="pillar">
     <span class="pillar-tag tag-mcp">MCP TOOLS</span>
     <h3>🤖 MCP 工具</h3>
     <ul>
-      <li><a href="/zh/mcp/tools/metadata">元数据工具</a> — 模型发现和 Schema</li>
-      <li><a href="/zh/mcp/tools/query">查询工具</a> — 执行 DSL 查询</li>
-      <li><a href="/zh/mcp/tools/nl-query">自然语言查询</a> — NL-to-DSL</li>
-      <li><a href="/zh/mcp/guide/chart-render-service">图表渲染</a> — 自动可视化</li>
-      <li><a href="/zh/mcp/tools/extensions">扩展工具</a> — 自定义插件</li>
+      <li><a href="./mcp/tools/metadata.html">元数据工具</a> — 模型发现和 Schema</li>
+      <li><a href="./mcp/tools/query.html">查询工具</a> — 执行 DSL 查询</li>
+      <li><a href="./mcp/tools/nl-query.html">自然语言查询</a> — NL-to-DSL</li>
+      <li><a href="./mcp/guide/chart-render-service.html">图表渲染</a> — 自动可视化</li>
+      <li><a href="./mcp/tools/extensions.html">扩展工具</a> — 自定义插件</li>
     </ul>
   </div>
 </div>
@@ -274,8 +274,8 @@ LIMIT 10
   <h2>开始构建 AI 数据查询</h2>
   <p>5 分钟部署语义层，让 AI 安全地查询你的业务数据</p>
   <div class="cta-buttons">
-    <a href="/zh/mcp/guide/quick-start" class="cta-btn-primary">快速开始 →</a>
-    <a href="/zh/dataset-model/guide/introduction" class="cta-btn-secondary">阅读文档</a>
+    <a href="./mcp/guide/quick-start.html" class="cta-btn-primary">快速开始 →</a>
+    <a href="./dataset-model/guide/introduction.html" class="cta-btn-secondary">阅读文档</a>
     <a href="https://github.com/foggy-projects/foggy-data-mcp-bridge" class="cta-btn-secondary" target="_blank">GitHub</a>
   </div>
 </div>
