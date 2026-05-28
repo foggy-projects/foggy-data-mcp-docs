@@ -15,7 +15,7 @@ const content = computed(() => {
   if (isZh.value) {
     return {
       className: 'foggy-home-zh',
-      h1: '让 AI 查询业务数据之前，先经过一层可治理的语义引擎。',
+      h1: '打通 AI 与业务数据的最后一公里',
       lead: 'Foggy Data MCP 用 TM/QM 语义模型、JSON Query DSL、MCP 工具和查询证据，把自然语言分析请求收敛为可建模、可校验、可执行、可审计的查询工作流。',
       actions: [
         ['阅读白皮书 v1.0', withBase('/zh/whitepaper/v1.0/'), 'foggy-button-primary'],
