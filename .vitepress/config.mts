@@ -2,11 +2,7 @@ import { defineConfig } from 'vitepress'
 
 const siteBase = '/foggy-data-mcp-docs/'
 const languageSwitch = {
-  text: '中文 / EN',
-  items: [
-    { text: 'English', link: '/' },
-    { text: '简体中文', link: '/zh/' }
-  ]
+  component: 'LanguageSwitch'
 }
 
 export default defineConfig({
