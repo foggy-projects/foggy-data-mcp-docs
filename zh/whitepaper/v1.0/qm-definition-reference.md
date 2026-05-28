@@ -128,7 +128,7 @@ columnGroups: [
 
 `partitionBy`、`windowOrderBy` 和 `windowFrame` 只用于带 `formula` 的 QM 计算字段。加载时这类列项会被转换为计算字段，执行时引擎先编译 `formula` 表达式，再按这些配置追加 `OVER (PARTITION BY ... ORDER BY ... frame)` 窗口子句。普通 `ref` 字段不会因为声明这些属性而变成窗口字段。
 
-窗口配置引用的字段必须能被当前 QM 解析。`windowOrderBy.dir` 未配置时按升序处理；`windowFrame` 当前按 SQL frame 字符串透传给查询引擎。后续版本可以考虑把窗口配置作为 formula 能力的一部分统一包装，而不是作为 column item 的独立属性长期暴露。
+窗口配置引用的字段必须能被当前 QM 解析。`windowOrderBy.dir` 未配置时按升序处理；`windowFrame` 当前按 SQL frame 字符串透传给查询引擎。这里属于 formula 计算字段的兼容性边界；如果未来调整公开建模方式，需要继续保持对现有模型的兼容处理。
 
 ## 4. 字段引用
 

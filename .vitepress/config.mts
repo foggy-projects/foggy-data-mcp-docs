@@ -186,6 +186,7 @@ export default defineConfig({
               text: 'v1.0',
               items: [
                 { text: '概览', link: '/zh/whitepaper/v1.0/' },
+                { text: '发布说明', link: '/zh/whitepaper/v1.0/v1.0-release-note' },
                 { text: '技术白皮书', link: '/zh/whitepaper/v1.0/foggy-data-mcp-technical-whitepaper' },
                 { text: 'TM/QM 定义总览', link: '/zh/whitepaper/v1.0/semantic-layer-syntax-reference' },
                 { text: 'TM 定义参考', link: '/zh/whitepaper/v1.0/tm-definition-reference' },

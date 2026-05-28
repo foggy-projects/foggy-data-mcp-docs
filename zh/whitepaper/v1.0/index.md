@@ -4,6 +4,7 @@ Foggy 是面向 LLM 的语义层引擎，用结构化语义模型和治理执行
 
 ## 文档
 
+- [v1.0 发布说明](./v1.0-release-note.md)
 - [Foggy LLM 语义层引擎技术白皮书 v1.0](./foggy-data-mcp-technical-whitepaper.md)
 - [TM/QM 语义层定义总览](./semantic-layer-syntax-reference.md)
 - [TM 定义参考](./tm-definition-reference.md)
