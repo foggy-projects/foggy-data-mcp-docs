@@ -597,3 +597,628 @@ html.foggy-hide-translations .VPNavScreen .translations {
   color: var(--vp-c-text-2);
   font-size: 0.92rem;
 }
+
+/* --- Public Landing Experience --- */
+.foggy-home {
+  --foggy-ink: #0b0f12;
+  --foggy-panel: #11181d;
+  --foggy-panel-2: #172127;
+  --foggy-line: rgba(255, 255, 255, 0.12);
+  --foggy-text-soft: rgba(255, 255, 255, 0.72);
+  --foggy-text-muted: rgba(255, 255, 255, 0.52);
+  --foggy-signal: #1ed39a;
+  --foggy-signal-2: #7dd3fc;
+  --foggy-warn: #f3b544;
+  --foggy-paper: #f7f4ed;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 24px 64px;
+}
+
+.foggy-home * {
+  box-sizing: border-box;
+}
+
+.foggy-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  gap: 28px;
+  align-items: stretch;
+  min-height: 640px;
+  padding: 22px;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(135deg, #0b0f12 0%, #12191d 54%, #1b1710 100%);
+  background-size: 58px 58px, 58px 58px, auto;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.foggy-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(30, 211, 154, 0.1) 42%, transparent 68%),
+    radial-gradient(circle at top left, rgba(243,181,68,0.13), transparent 38%);
+}
+
+.foggy-hero-copy,
+.foggy-hero-visual {
+  position: relative;
+  z-index: 1;
+}
+
+.foggy-hero-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 26px;
+}
+
+.foggy-kicker,
+.foggy-section-label {
+  color: var(--foggy-signal);
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.foggy-hero h1 {
+  max-width: 720px;
+  margin: 18px 0 0;
+  color: #fff;
+  font-size: 3.45rem;
+  line-height: 1.08;
+  font-weight: 820;
+}
+
+.foggy-home-zh .foggy-hero h1 {
+  font-size: 3.35rem;
+  line-height: 1.08;
+}
+
+.foggy-lead {
+  max-width: 690px;
+  margin: 22px 0 0;
+  color: var(--foggy-text-soft);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.foggy-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.foggy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 750;
+  font-size: 0.94rem;
+  text-decoration: none !important;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.foggy-button:hover {
+  transform: translateY(-1px);
+}
+
+.foggy-button-primary {
+  color: #06100d !important;
+  background: var(--foggy-signal);
+}
+
+.foggy-button-secondary {
+  color: #fff !important;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.foggy-button-ghost {
+  color: var(--foggy-text-soft) !important;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.foggy-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 34px;
+}
+
+.foggy-trust-row span {
+  padding: 7px 10px;
+  color: var(--foggy-text-soft);
+  font-size: 0.82rem;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.055);
+}
+
+.foggy-hero-visual {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.foggy-console {
+  width: 100%;
+  min-width: 0;
+  background: rgba(9, 13, 15, 0.86);
+  border: 1px solid var(--foggy-line);
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(0,0,0,0.42);
+  overflow: hidden;
+}
+
+.foggy-console-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--foggy-line);
+  background: rgba(255,255,255,0.04);
+}
+
+.foggy-console-top img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.foggy-console-top span {
+  flex: 1;
+  color: #fff;
+  font-weight: 760;
+  min-width: 0;
+}
+
+.foggy-console-top b {
+  padding: 4px 8px;
+  color: var(--foggy-signal);
+  font-size: 0.72rem;
+  border: 1px solid rgba(30,211,154,0.35);
+  border-radius: 999px;
+}
+
+.foggy-console-grid {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: 14px;
+  padding: 16px;
+}
+
+.foggy-model-panel,
+.foggy-query-panel {
+  min-width: 0;
+  padding: 16px;
+  background: var(--foggy-panel);
+  border: 1px solid var(--foggy-line);
+  border-radius: 8px;
+}
+
+.foggy-panel-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--foggy-warn);
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  font-size: 0.74rem;
+  font-weight: 760;
+}
+
+.foggy-model-panel strong {
+  display: block;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.foggy-model-panel p {
+  margin: 8px 0 16px;
+  color: var(--foggy-text-muted);
+  font-size: 0.83rem;
+  line-height: 1.55;
+}
+
+.foggy-mini-table {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 12px;
+  align-items: center;
+}
+
+.foggy-mini-table span {
+  color: var(--foggy-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.foggy-mini-table b {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  font-size: 0.76rem;
+  font-weight: 620;
+}
+
+.foggy-mini-table em {
+  color: var(--foggy-signal);
+  font-size: 0.74rem;
+  font-style: normal;
+}
+
+.foggy-code {
+  display: grid;
+  gap: 4px;
+  max-width: 100%;
+  overflow: hidden;
+  color: #d5f4ea;
+}
+
+.foggy-code span {
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.foggy-pipeline {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 0 16px 16px;
+}
+
+.foggy-pipeline span {
+  min-width: 0;
+  padding: 8px 10px;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  font-size: 0.72rem;
+  text-align: center;
+  background: var(--foggy-panel-2);
+  border: 1px solid var(--foggy-line);
+  border-radius: 6px;
+}
+
+.foggy-pipeline i {
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(30,211,154,0.2), rgba(30,211,154,0.8));
+}
+
+.foggy-proof {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-divider);
+}
+
+.foggy-proof div {
+  padding: 20px;
+  background: var(--vp-c-bg);
+}
+
+.foggy-proof strong,
+.foggy-proof span {
+  display: block;
+}
+
+.foggy-proof strong {
+  color: var(--vp-c-text-1);
+  font-size: 1.05rem;
+}
+
+.foggy-proof span {
+  margin-top: 6px;
+  color: var(--vp-c-text-2);
+  font-size: 0.88rem;
+}
+
+.foggy-section {
+  margin-top: 72px;
+}
+
+.foggy-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 38px;
+  align-items: center;
+}
+
+.foggy-section h2 {
+  max-width: 820px;
+  margin: 12px 0 0;
+  color: var(--vp-c-text-1);
+  font-size: 2.35rem;
+  line-height: 1.16;
+  font-weight: 810;
+}
+
+.foggy-section p {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: var(--vp-c-text-2);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.foggy-contrast {
+  display: grid;
+  gap: 12px;
+}
+
+.foggy-contrast div {
+  padding: 18px;
+  color: #fff;
+  background: #10161a;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+}
+
+.foggy-contrast b,
+.foggy-contrast span {
+  display: block;
+}
+
+.foggy-contrast b {
+  color: var(--foggy-warn);
+}
+
+.foggy-contrast span {
+  margin-top: 8px;
+  color: var(--foggy-text-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.foggy-section-head {
+  max-width: 820px;
+}
+
+.foggy-lifecycle {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.foggy-lifecycle a {
+  display: block;
+  min-height: 230px;
+  padding: 20px;
+  color: inherit !important;
+  text-decoration: none !important;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.foggy-lifecycle a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(30,211,154,0.52);
+  box-shadow: 0 18px 42px rgba(7, 17, 13, 0.12);
+}
+
+.foggy-lifecycle span {
+  color: var(--foggy-signal);
+  font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Liberation Mono", monospace;
+  font-weight: 800;
+}
+
+.foggy-lifecycle h3 {
+  margin: 28px 0 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--vp-c-text-1);
+  font-size: 1.12rem;
+}
+
+.foggy-lifecycle p {
+  margin-top: 12px;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.foggy-docs-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  gap: 30px;
+  padding: 30px;
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(180deg, #10161a 0%, #151b17 100%);
+  background-size: 52px 52px, auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.foggy-docs-band h2 {
+  color: #fff;
+}
+
+.foggy-docs-band p {
+  color: var(--foggy-text-soft);
+}
+
+.foggy-doc-links {
+  display: grid;
+  gap: 10px;
+  align-content: center;
+}
+
+.foggy-doc-links a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  color: #fff !important;
+  text-decoration: none !important;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 6px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.foggy-doc-links a:hover {
+  transform: translateX(2px);
+  background: rgba(30,211,154,0.12);
+}
+
+@media (max-width: 1080px) {
+  .foggy-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .foggy-hero h1,
+  .foggy-home-zh .foggy-hero h1 {
+    font-size: 3.05rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .foggy-home {
+    padding: 14px 14px 44px;
+  }
+
+  .foggy-hero {
+    padding: 14px;
+  }
+
+  .foggy-hero-copy {
+    padding: 24px 10px;
+  }
+
+  .foggy-hero h1,
+  .foggy-home-zh .foggy-hero h1 {
+    font-size: 2.32rem;
+    line-height: 1.12;
+  }
+
+  .foggy-lead {
+    font-size: 0.98rem;
+  }
+
+  .foggy-console-grid,
+  .foggy-split,
+  .foggy-docs-band {
+    grid-template-columns: 1fr;
+  }
+
+  .foggy-proof,
+  .foggy-lifecycle {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .foggy-section h2 {
+    font-size: 1.85rem;
+  }
+
+  .foggy-pipeline {
+    grid-template-columns: 1fr;
+  }
+
+  .foggy-pipeline i {
+    height: 14px;
+    width: 1px;
+    justify-self: center;
+    background: linear-gradient(180deg, rgba(30,211,154,0.2), rgba(30,211,154,0.8));
+  }
+}
+
+@media (max-width: 560px) {
+  .foggy-hero {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .foggy-hero-copy {
+    padding: 18px 6px 8px;
+  }
+
+  .foggy-hero h1,
+  .foggy-home-zh .foggy-hero h1 {
+    font-size: 1.9rem;
+    line-height: 1.1;
+  }
+
+  .foggy-lead {
+    margin-top: 14px;
+    font-size: 0.92rem;
+    line-height: 1.58;
+  }
+
+  .foggy-trust-row {
+    display: none;
+  }
+
+  .foggy-console-top {
+    padding: 10px 12px;
+  }
+
+  .foggy-console-top img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .foggy-console-grid {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .foggy-model-panel,
+  .foggy-pipeline {
+    display: none;
+  }
+
+  .foggy-query-panel {
+    padding: 12px;
+  }
+
+  .foggy-code span:nth-child(n+4) {
+    display: none;
+  }
+
+  .foggy-proof,
+  .foggy-lifecycle {
+    grid-template-columns: 1fr;
+  }
+
+  .foggy-actions {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .foggy-button {
+    min-height: 38px;
+    padding: 8px 12px;
+    width: 100%;
+  }
+}

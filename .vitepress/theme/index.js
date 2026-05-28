@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import DownloadButton from './components/DownloadButton.vue'
+import HomeLanding from './components/HomeLanding.vue'
 import './custom.css'
 
 function installWhitepaperTranslationGuard() {
@@ -35,5 +36,6 @@ export default {
   enhanceApp({ app }) {
     installWhitepaperTranslationGuard()
     app.component('DownloadButton', DownloadButton)
+    app.component('HomeLanding', HomeLanding)
   }
 }
