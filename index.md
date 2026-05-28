@@ -27,7 +27,7 @@ features:
     details: TM/QM models expose dimensions, measures, permissions, and field meaning so AI works with business concepts instead of raw tables.
   - icon: 🤖
     title: MCP-Native
-    details: Connect Claude Desktop, Cursor, Trae, and your own apps through MCP endpoints, metadata tools, query tools, and chart tools.
+    details: Connect Claude Desktop, Cursor, Trae, and your own apps through MCP endpoints, model discovery, query tools, and compose workflows.
   - icon: 🌐
     title: One Layer, Many Backends
     details: Run the same query model across MySQL, PostgreSQL, SQL Server, SQLite, MongoDB, and language runtimes in Java or Python.
@@ -89,7 +89,7 @@ features:
   <a href="./zh/mcp/guide/quick-start.html" class="path-card">
     <span class="path-tag">GENERAL MCP</span>
     <h3>通用数据语义层</h3>
-    <p>适合要把 AI 安全接到业务库、报表库或分析库的团队。先跑通 MCP、DSL、图表和多数据库能力。</p>
+    <p>适合要把 AI 受治理地接到业务库、报表库或分析库的团队。先跑通 MCP、DSL、权限注入和多数据库能力。</p>
     <span class="path-link">查看中文快速开始 →</span>
   </a>
   <a href="https://github.com/foggy-projects/foggy-odoo-bridge" class="path-card path-card-highlight" target="_blank">
@@ -113,9 +113,9 @@ AI Assistant / App
         │  MCP tools / JSON-RPC
         ▼
 Foggy MCP Server
-  • metadata tool
+  • model discovery
   • query tool
-  • chart tool
+  • compose workflow
         │
         ▼
 Semantic Layer
@@ -161,7 +161,7 @@ MySQL / PostgreSQL / SQL Server / SQLite / MongoDB
     <ul>
       <li>Claude Desktop, Cursor, Trae, custom apps</li>
       <li>Java and Python implementations</li>
-      <li>Chart generation for demos and reporting</li>
+      <li>Composable workflows for multi-step analysis</li>
       <li>Good fit for ERP, BI, and internal AI tools</li>
     </ul>
   </div>
@@ -181,7 +181,7 @@ MySQL / PostgreSQL / SQL Server / SQLite / MongoDB
   <div class="use-case-card">
     <span class="use-case-icon">🏢</span>
     <h3>Odoo 智能问数</h3>
-    <p>把 Odoo 权限规则映射到 DSL 查询，做销售、采购、库存、财务的自然语言分析。</p>
+    <p>把 Odoo 权限规则映射到 DSL 查询，支持销售、采购、库存、财务等场景的 AI 辅助分析。</p>
   </div>
   <div class="use-case-card">
     <span class="use-case-icon">🛡️</span>

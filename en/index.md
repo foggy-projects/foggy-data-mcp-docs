@@ -1,9 +1,9 @@
 ---
 layout: home
 hero:
-  name: Foggy Data MCP Bridge
+  name: Foggy Data MCP
   text: AI-Native Semantic Layer Framework
-  tagline: Enable AI assistants to query business data safely and accurately through MCP protocol
+  tagline: Let AI assistants query business data through governed semantic models, structured DSL, and MCP tools
   actions:
     - theme: brand
       text: Get Started
@@ -17,8 +17,8 @@ hero:
 
 features:
   - icon: 🔒
-    title: Security First
-    details: DSL-based queries eliminate SQL injection risks. Field-level access control with read-only design.
+    title: Governance First
+    details: DSL-based queries, parameter binding, and field-level permissions reduce direct SQL exposure and make query evidence easier to review.
     link: /en/dataset-model/api/authorization
     linkText: Access Control
   - icon: 🎯
@@ -37,13 +37,13 @@ features:
     link: /en/mcp/guide/introduction
     linkText: MCP Integration
   - icon: 📊
-    title: Auto Visualization
-    details: Automatic chart generation - trend charts, bar charts, pie charts, and more.
-    link: /en/mcp/tools/chart
-    linkText: Chart Features
+    title: Technical Whitepaper
+    details: The v1.0 public whitepaper is currently published in Chinese while the English version is being prepared.
+    link: /zh/whitepaper/v1.0/
+    linkText: Read v1.0
   - icon: 🚀
-    title: Production Ready
-    details: Spring Boot based, Docker support, bilingual docs, extensible addon system.
+    title: Deployment Oriented
+    details: Spring Boot based runtime, Docker deployment path, bilingual manuals, and extensible integration modules.
     link: /en/mcp/guide/quick-start
     linkText: Quick Deploy
 ---
@@ -61,7 +61,7 @@ features:
 
 | Problem | Impact |
 |---------|--------|
-| **Security Risks** | AI may generate `DELETE`, `UPDATE`, or access sensitive tables |
+| **Governance Risks** | AI-generated SQL can drift away from permission and audit boundaries |
 | **Schema Exposure** | Must share complete database schema with AI |
 | **No Business Semantics** | What does `order_status=3` mean? AI doesn't know |
 | **Complex JOINs** | Multi-table relationships and aggregations are fragile |
@@ -69,10 +69,10 @@ features:
 ### ✅ Our Solution: Semantic Layer with DSL Query Language
 
 ```
-AI → JSON DSL Query → Semantic Layer → Safe SQL → Database
+AI → JSON DSL Query → Semantic Layer → Governed SQL → Database
                             ↓
-                    • Prevents SQL injection
-                    • Enforces access control
+                    • Uses structured query payloads
+                    • Applies access control
                     • Handles multi-table JOINs
                     • Abstracts database dialects
 ```
@@ -135,7 +135,7 @@ docker compose up -d
 Then query data using natural language:
 - *"Show me sales by brand for the last week"*
 - *"Which products had the highest return rate last month?"*
-- *"Generate a chart comparing revenue by region"*
+- *"Compare revenue by region and explain the query evidence"*
 
 ## 📦 Core Modules
 

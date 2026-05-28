@@ -3,14 +3,14 @@ layout: home
 hero:
   name: Foggy Data MCP
   text: AI 原生语义层框架
-  tagline: 让 AI 助手通过 MCP 协议安全、准确地查询业务数据 —— 无需暴露数据库结构
+  tagline: 让 AI 助手通过 MCP 协议和语义层模型查询业务数据，减少直接暴露数据库结构和裸 SQL 的风险
   actions:
     - theme: brand
       text: 快速开始
       link: /zh/mcp/guide/quick-start
     - theme: alt
-      text: JSON Query DSL
-      link: /zh/dataset-model/tm-qm/query-dsl
+      text: 白皮书 v1.0
+      link: /zh/whitepaper/v1.0/
     - theme: alt
       text: GitHub
       link: https://github.com/foggy-projects/foggy-data-mcp-bridge
@@ -28,12 +28,12 @@ features:
     linkText: DSL 语法参考
   - icon: 🤖
     title: MCP 协议集成
-    details: 原生 MCP Server，开箱即用对接 Claude Desktop、Cursor、Trae CN。自然语言查询，自动生成图表。
+    details: 通过 MCP Server 对接 Claude Desktop、Cursor、Trae CN。AI 调用模型发现、模型描述、结构化查询和组合式分析工具。
     link: /zh/mcp/guide/introduction
     linkText: MCP 工具
   - icon: 🔒
-    title: 安全优先
-    details: DSL 查询消除 SQL 注入。行级 / 列级 / 角色级三层访问控制，运行时权限注入，只读设计。
+    title: 治理优先
+    details: DSL 查询、参数化处理和权限注入共同约束查询过程。重要结果仍应结合查询证据、权限配置和业务记录复核。
     link: /zh/dataset-model/api/authorization
     linkText: 权限控制
   - icon: 🌐
@@ -73,28 +73,28 @@ features:
 <!-- Problem vs Solution -->
 <div class="section-header">
   <h2>为什么需要语义层？</h2>
-  <p>让 AI 直接写 SQL 查询数据库，存在严重的安全和准确性风险</p>
+  <p>让 AI 直接写 SQL 查询数据库，会放大 schema 暴露、权限漂移和业务口径不一致的问题</p>
 </div>
 
 <div class="comparison">
   <div class="comparison-bad">
-    <h4>❌ AI 直接写 SQL</h4>
+    <h4>AI 直接写 SQL</h4>
     <ul>
-      <li>AI 可能生成 DELETE / UPDATE 语句</li>
-      <li>必须将完整 Schema 暴露给 AI</li>
+      <li>提示词往往需要包含表名、字段和数据库方言细节</li>
       <li><code>order_status=3</code> 是什么意思？AI 不知道</li>
-      <li>多表 JOIN 容易出错，调试成本高</li>
-      <li>不同数据库方言需要不同 SQL</li>
+      <li>多表 JOIN、指标口径和权限边界容易漂移</li>
+      <li>错误重试可能继续猜测不存在或无权访问的字段</li>
+      <li>不同数据库方言会带来额外的脆弱性</li>
     </ul>
   </div>
   <div class="comparison-good">
-    <h4>✅ 语义层 + DSL 查询</h4>
+    <h4>语义层 + DSL 查询</h4>
     <ul>
-      <li>DSL 只读设计，杜绝危险操作</li>
-      <li>AI 只接触业务语义，不知道表结构</li>
-      <li>语义层定义字段含义和关联</li>
+      <li>AI 通过结构化 DSL 表达查询意图</li>
+      <li>QM 只暴露已建模、已授权的业务字段</li>
+      <li>语义层定义字段含义、关联和指标口径</li>
       <li>引擎自动处理 JOIN 和聚合</li>
-      <li>一套 DSL 适配所有数据库方言</li>
+      <li>查询过程可以保留 DSL、SQL 和结果证据</li>
     </ul>
   </div>
 </div>
@@ -111,7 +111,7 @@ features:
 ┌─────────────────────────────────────────────┐
 │            Foggy MCP Server                 │
 │  ┌───────────┐  ┌──────────┐  ┌──────────┐ │
-│  │ 元数据工具 │  │ 查询工具  │  │ 图表工具  │ │
+│  │ 模型发现  │  │ 查询工具  │  │ 组合分析  │ │
 │  └───────────┘  └──────────┘  └──────────┘ │
 └─────────────────────┬───────────────────────┘
                       │
@@ -165,11 +165,11 @@ features:
     <span class="pillar-tag tag-mcp">MCP TOOLS</span>
     <h3>🤖 MCP 工具</h3>
     <ul>
-      <li><a href="./mcp/tools/metadata.html">元数据工具</a> — 模型发现和 Schema</li>
+      <li><a href="./mcp/tools/metadata.html">模型发现</a> — 可访问模型和字段说明</li>
       <li><a href="./mcp/tools/query.html">查询工具</a> — 执行 DSL 查询</li>
-      <li><a href="./mcp/tools/nl-query.html">自然语言查询</a> — NL-to-DSL</li>
-      <li><a href="./mcp/guide/chart-render-service.html">图表渲染</a> — 自动可视化</li>
-      <li><a href="./mcp/tools/extensions.html">扩展工具</a> — 自定义插件</li>
+      <li>Compose Script — 多步骤组合式分析</li>
+      <li>查询证据 — 保留 DSL、SQL 和结果摘要</li>
+      <li><a href="./mcp/tools/extensions.html">扩展工具</a> — 按部署暴露可选能力</li>
     </ul>
   </div>
 </div>
@@ -177,7 +177,7 @@ features:
 <!-- DSL Example -->
 <div class="section-header">
   <h2>DSL 查询示例</h2>
-  <p>AI 助手发送 JSON DSL → 语义层翻译为安全 SQL</p>
+  <p>AI 助手发送 JSON DSL → 语义层校验字段和权限 → 引擎生成目标数据库 SQL</p>
 </div>
 
 <div class="dsl-example">
@@ -250,7 +250,7 @@ LIMIT 10
   <div class="quick-step">
     <div class="step-num">3</div>
     <h4>开始查询</h4>
-    <p>用自然语言提问：<br/><em>"显示上周各品牌的销售额趋势"</em></p>
+    <p>让 AI 工具调用模型发现和查询工具：<br/><em>"按品牌统计上周销售额"</em></p>
   </div>
 </div>
 
