@@ -37,6 +37,7 @@ export default defineConfig({
               { text: '数据查询', link: '/zh/dataset-query/guide/introduction' },
               { text: '数据建模', link: '/zh/dataset-model/guide/introduction' },
               { text: 'MCP 服务', link: '/zh/mcp/guide/introduction' },
+              { text: '技术博客', link: '/zh/blog/' },
               { text: 'LLM 语义层白皮书', link: '/zh/whitepaper/' }
             ]
           },
@@ -176,6 +177,15 @@ export default defineConfig({
                 { text: 'Claude Desktop', link: '/zh/mcp/integration/claude-desktop' },
                 { text: 'Cursor', link: '/zh/mcp/integration/cursor' },
                 { text: 'API 调用', link: '/zh/mcp/integration/api' }
+              ]
+            }
+          ],
+          '/zh/blog/': [
+            {
+              text: '技术博客',
+              items: [
+                { text: '博客索引', link: '/zh/blog/' },
+                { text: 'AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL', link: '/zh/blog/ai-sql-erp-governed-semantic-query' }
               ]
             }
           ],
