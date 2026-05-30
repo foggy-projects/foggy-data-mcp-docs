@@ -8,3 +8,4 @@ The technical blog is currently maintained in Chinese.
 - [Clarify and reject in enterprise AI data queries](/zh/blog/clarify-reject-fail-closed-ai-data-query)
 - [Audit and provenance in production AI data queries](/zh/blog/audit-provenance-ai-data-query)
 - [Semantic query capability layers](/zh/blog/semantic-query-capability-layers)
+- [Odoo AI query deployment boundaries](/zh/blog/odoo-ai-query-deployment-boundaries)
