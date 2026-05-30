@@ -2,7 +2,11 @@
 
 这里收录 Foggy Data MCP / Foggy Odoo Bridge 相关的技术文章。博客文章用于解释工程观点、架构取舍和生产边界；白皮书仍以 [LLM 语义层引擎白皮书](/zh/whitepaper/) 为准。
 
-## 已发布
+## 系列入口
+
+- [企业 AI 数据访问治理系列](./enterprise-ai-data-governance-series.md)
+
+## 已发布文章
 
 - [AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL](./ai-sql-erp-governed-semantic-query.md)
 - [MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)

@@ -185,6 +185,7 @@ export default defineConfig({
               text: '技术博客',
               items: [
                 { text: '博客索引', link: '/zh/blog/' },
+                { text: '企业 AI 数据访问治理系列', link: '/zh/blog/enterprise-ai-data-governance-series' },
                 { text: 'AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL', link: '/zh/blog/ai-sql-erp-governed-semantic-query' },
                 { text: 'MCP 只是传输协议，企业数据安全边界应该在工具设计里', link: '/zh/blog/mcp-transport-governed-tool-boundary' },
                 { text: '从 Odoo record rules 看 AI 数据查询的权限治理', link: '/zh/blog/odoo-record-rules-ai-query-governance' }
