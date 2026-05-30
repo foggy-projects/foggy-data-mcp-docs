@@ -82,6 +82,21 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 - 需要评估 AI 查询边界的架构师；
 - Odoo / ERP 技术实施团队。
 
+### 5. 企业 AI 问数的澄清与拒绝：比“回答一切”更重要
+
+[阅读全文](./clarify-reject-fail-closed-ai-data-query.md)
+
+第五篇讨论 clarify、reject 和 fail closed。
+
+企业 AI 问数不应该把“尽量回答一切”作为唯一目标。文章重点说明：当时间范围、指标口径、模型选择或权限边界不明确时，系统应该澄清；当请求越权、超出模型能力或要求写回业务数据时，系统应该拒绝；澄清和拒绝都应该进入工具返回结构和审计记录，而不是只靠最终回答文本解释。
+
+适合读者：
+
+- 正在设计 AI 问数产品的开发者；
+- 企业 AI 平台和 MCP 工具开发者；
+- 关心审计、权限和问数可信度的数据平台工程师；
+- Odoo / ERP 技术实施团队。
+
 ## 推荐阅读顺序
 
 如果你从企业 AI 数据访问整体架构开始，建议按下面顺序读：
@@ -90,6 +105,7 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 2. [MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)
 3. [从 Odoo record rules 看 AI 数据查询的权限治理](./odoo-record-rules-ai-query-governance.md)
 4. [raw schema 不是业务授权模型：AI 数据访问为什么需要语义层](./raw-schema-is-not-business-authorization-model.md)
+5. [企业 AI 问数的澄清与拒绝：比“回答一切”更重要](./clarify-reject-fail-closed-ai-data-query.md)
 
 如果你已经在做 MCP 工具实现，可以先读第二篇，再回到第一篇和第三篇。
 
@@ -112,7 +128,6 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 
 后续文章会继续展开：
 
-- clarify / reject 为什么是生产级 AI 查询能力；
 - audit 和 provenance 应该记录什么；
 - 语义查询能力如何分层承诺；
 - Odoo Community、Pro、self-hosted 的采用边界。
