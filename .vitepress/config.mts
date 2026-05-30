@@ -190,7 +190,8 @@ export default defineConfig({
                 { text: 'MCP 只是传输协议，企业数据安全边界应该在工具设计里', link: '/zh/blog/mcp-transport-governed-tool-boundary' },
                 { text: '从 Odoo record rules 看 AI 数据查询的权限治理', link: '/zh/blog/odoo-record-rules-ai-query-governance' },
                 { text: 'raw schema 不是业务授权模型：AI 数据访问为什么需要语义层', link: '/zh/blog/raw-schema-is-not-business-authorization-model' },
-                { text: '企业 AI 问数的澄清与拒绝：比“回答一切”更重要', link: '/zh/blog/clarify-reject-fail-closed-ai-data-query' }
+                { text: '企业 AI 问数的澄清与拒绝：比“回答一切”更重要', link: '/zh/blog/clarify-reject-fail-closed-ai-data-query' },
+                { text: '生产级 AI 查询需要 audit 和 provenance，而不只是一个答案', link: '/zh/blog/audit-provenance-ai-data-query' }
               ]
             }
           ],
