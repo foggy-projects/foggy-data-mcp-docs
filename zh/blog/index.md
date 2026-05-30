@@ -5,6 +5,7 @@
 ## 已发布
 
 - [AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL](./ai-sql-erp-governed-semantic-query.md)
+- [MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)
 
 ## 计划选题
 
@@ -12,8 +13,6 @@
 
 | 优先级 | 选题 | 主题 |
 |---|---|---|
-| P0 | AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL | raw SQL、ERP 权限、语义查询 |
-| P0 | MCP 只是传输协议，企业数据安全边界应该在工具设计里 | MCP tool boundary、governed tools |
 | P0 | 从 Odoo record rules 看 AI 数据查询的权限治理 | Odoo model access、record rules、多公司 |
 | P1 | raw schema 不是业务授权模型：AI 数据访问为什么需要语义层 | schema、semantic model、query model |
 | P1 | 企业 AI 问数的澄清与拒绝：比“回答一切”更重要 | clarify、reject、fail closed |
