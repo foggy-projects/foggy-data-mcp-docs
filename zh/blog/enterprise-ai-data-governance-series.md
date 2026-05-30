@@ -67,6 +67,21 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 - ERP 技术负责人；
 - 想理解 AI 查询权限治理细节的 MCP 开发者。
 
+### 4. raw schema 不是业务授权模型：AI 数据访问为什么需要语义层
+
+[阅读全文](./raw-schema-is-not-business-authorization-model.md)
+
+第四篇讨论 schema introspection 的边界。
+
+数据库 schema 可以说明表、字段、类型、索引和部分关系，但它不能可靠表达当前用户能看哪些业务对象、记录、字段和指标。文章重点说明：raw schema 可以辅助建模，却不应该成为最终用户 AI 查询的授权入口；生产级 AI 数据访问应该通过语义模型和查询模型，把字段可见性、业务口径、行级切片和执行证据前置到查询执行前。
+
+适合读者：
+
+- 正在把数据库 schema 暴露给 AI 的开发者；
+- 负责企业数据权限和指标口径的数据平台工程师；
+- 需要评估 AI 查询边界的架构师；
+- Odoo / ERP 技术实施团队。
+
 ## 推荐阅读顺序
 
 如果你从企业 AI 数据访问整体架构开始，建议按下面顺序读：
@@ -74,10 +89,13 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 1. [AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL](./ai-sql-erp-governed-semantic-query.md)
 2. [MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)
 3. [从 Odoo record rules 看 AI 数据查询的权限治理](./odoo-record-rules-ai-query-governance.md)
+4. [raw schema 不是业务授权模型：AI 数据访问为什么需要语义层](./raw-schema-is-not-business-authorization-model.md)
 
 如果你已经在做 MCP 工具实现，可以先读第二篇，再回到第一篇和第三篇。
 
 如果你是 Odoo 实施团队，可以先读第三篇，再看前两篇了解更通用的架构背景。
+
+如果你正在用 schema introspection 或 Text-to-SQL 做企业数据接入，建议读完第一篇后直接读第四篇。
 
 ## 和白皮书的关系
 
@@ -94,7 +112,6 @@ Odoo 用户不是 PostgreSQL 用户。AI 查询如果绕过 Odoo 应用层，直
 
 后续文章会继续展开：
 
-- raw schema 为什么不是业务授权模型；
 - clarify / reject 为什么是生产级 AI 查询能力；
 - audit 和 provenance 应该记录什么；
 - 语义查询能力如何分层承诺；
