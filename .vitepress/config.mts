@@ -193,7 +193,8 @@ export default defineConfig({
                 { text: '企业 AI 问数的澄清与拒绝：比“回答一切”更重要', link: '/zh/blog/clarify-reject-fail-closed-ai-data-query' },
                 { text: '生产级 AI 查询需要 audit 和 provenance，而不只是一个答案', link: '/zh/blog/audit-provenance-ai-data-query' },
                 { text: '语义查询能力应该分层承诺：DSL、Semantic SQL、CTE 与小结果二次分析', link: '/zh/blog/semantic-query-capability-layers' },
-                { text: 'Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲', link: '/zh/blog/odoo-ai-query-deployment-boundaries' }
+                { text: 'Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲', link: '/zh/blog/odoo-ai-query-deployment-boundaries' },
+                { text: '给业务系统接 AI 工具前，先定义有效用户上下文', link: '/zh/blog/effective-user-context-ai-tools' }
               ]
             }
           ],

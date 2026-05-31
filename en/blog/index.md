@@ -9,3 +9,4 @@ The technical blog is currently maintained in Chinese.
 - [Audit and provenance in production AI data queries](/zh/blog/audit-provenance-ai-data-query)
 - [Semantic query capability layers](/zh/blog/semantic-query-capability-layers)
 - [Odoo AI query deployment boundaries](/zh/blog/odoo-ai-query-deployment-boundaries)
+- [Effective user context for AI tools](/zh/blog/effective-user-context-ai-tools)
