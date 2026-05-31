@@ -45,6 +45,7 @@ const content = computed(() => {
       docsTitle: '白皮书 v1.0 已冻结，后续只修正错误口径。',
       docsBody: '当前公开版本聚焦已经实现和验证的语义建模、DSL 查询、Compose 组合式分析、治理和证据能力。Virtual Semantic SQL 等方向进入后续版本路线图。',
       docs: [
+        ['技术博客系列', withBase('/zh/blog/enterprise-ai-data-governance-series.html')],
         ['白皮书 v1.0', withBase('/zh/whitepaper/v1.0/')],
         ['TM/QM 定义总览', withBase('/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html')],
         ['DSL 语法参考', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],
@@ -85,6 +86,7 @@ const content = computed(() => {
     docsTitle: 'The v1.0 whitepaper is frozen as the current public contract.',
     docsBody: 'The current public release documents implemented and verified semantic modeling, DSL query, compose analysis, governance, and evidence capabilities. Future capabilities stay in later versions and roadmap documents.',
     docs: [
+      ['Technical Blog', withBase('/en/blog/')],
       ['Whitepaper v1.0', withBase('/zh/whitepaper/v1.0/')],
       ['TM/QM Reference', withBase('/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html')],
       ['DSL Syntax', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],

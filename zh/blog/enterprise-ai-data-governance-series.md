@@ -12,6 +12,17 @@
 
 这些文章不是产品功能清单，也不是“让 AI 做一切”的宣传。它们讨论的是企业系统把 AI 接入业务数据时必须处理的工程边界。
 
+## 按读者角色阅读
+
+如果你不想从第一篇顺序读，可以按角色选择入口：
+
+| 读者角色 | 建议阅读 | 重点问题 |
+|---|---|---|
+| Odoo 实施团队 | [从 Odoo record rules 看 AI 数据查询的权限治理](./odoo-record-rules-ai-query-governance.md)、[Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲](./odoo-ai-query-deployment-boundaries.md)、[给业务系统接 AI 工具前，先定义有效用户上下文](./effective-user-context-ai-tools.md) | Odoo 用户上下文、record rules、多公司、部署边界 |
+| MCP 工具开发者 | [MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)、[企业 AI 问数的澄清与拒绝：比“回答一切”更重要](./clarify-reject-fail-closed-ai-data-query.md)、[生产级 AI 查询需要 audit 和 provenance，而不只是一个答案](./audit-provenance-ai-data-query.md) | tool boundary、fail closed、audit/provenance |
+| 数据平台 / BI 团队 | [raw schema 不是业务授权模型：AI 数据访问为什么需要语义层](./raw-schema-is-not-business-authorization-model.md)、[语义查询能力应该分层承诺：DSL、Semantic SQL、CTE 与小结果二次分析](./semantic-query-capability-layers.md)、[AI-driven analytics 不能只靠 LLM + SQL：指标口径、权限和复核流程缺一不可](./ai-driven-analytics-metrics-governance.md) | 语义模型、指标口径、查询能力边界 |
+| 架构师 | [AI 查询 ERP 数据库时，为什么不该默认让模型写 SQL](./ai-sql-erp-governed-semantic-query.md)、[MCP 只是传输协议，企业数据安全边界应该在工具设计里](./mcp-transport-governed-tool-boundary.md)、[Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲](./odoo-ai-query-deployment-boundaries.md) | 总体架构、部署控制、权限和治理责任划分 |
+
 ## 核心观点
 
 1. AI 不应该默认直接写 SQL 查询 ERP 数据库。

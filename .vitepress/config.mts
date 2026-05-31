@@ -243,7 +243,8 @@ export default defineConfig({
               { text: 'FSScript Engine', link: '/en/fsscript/guide/introduction' },
               { text: 'Dataset Query', link: '/en/dataset-query/guide/introduction' },
               { text: 'Dataset Modeling', link: '/en/dataset-model/guide/introduction' },
-              { text: 'MCP Service', link: '/en/mcp/guide/introduction' }
+              { text: 'MCP Service', link: '/en/mcp/guide/introduction' },
+              { text: 'Technical Blog', link: '/en/blog/' }
             ]
           },
           languageSwitch,
