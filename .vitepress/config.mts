@@ -194,7 +194,8 @@ export default defineConfig({
                 { text: '生产级 AI 查询需要 audit 和 provenance，而不只是一个答案', link: '/zh/blog/audit-provenance-ai-data-query' },
                 { text: '语义查询能力应该分层承诺：DSL、Semantic SQL、CTE 与小结果二次分析', link: '/zh/blog/semantic-query-capability-layers' },
                 { text: 'Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲', link: '/zh/blog/odoo-ai-query-deployment-boundaries' },
-                { text: '给业务系统接 AI 工具前，先定义有效用户上下文', link: '/zh/blog/effective-user-context-ai-tools' }
+                { text: '给业务系统接 AI 工具前，先定义有效用户上下文', link: '/zh/blog/effective-user-context-ai-tools' },
+                { text: 'AI-driven analytics 不能只靠 LLM + SQL：指标口径、权限和复核流程缺一不可', link: '/zh/blog/ai-driven-analytics-metrics-governance' }
               ]
             }
           ],

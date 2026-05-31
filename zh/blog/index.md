@@ -17,14 +17,18 @@
 - [语义查询能力应该分层承诺：DSL、Semantic SQL、CTE 与小结果二次分析](./semantic-query-capability-layers.md)
 - [Odoo AI 问数的部署边界：Community、Pro 与 self-hosted 应该怎么讲](./odoo-ai-query-deployment-boundaries.md)
 - [给业务系统接 AI 工具前，先定义有效用户上下文](./effective-user-context-ai-tools.md)
+- [AI-driven analytics 不能只靠 LLM + SQL：指标口径、权限和复核流程缺一不可](./ai-driven-analytics-metrics-governance.md)
 
-## 计划选题
+## 后续方向
 
-这些选题会围绕企业 AI 数据访问、MCP 工具边界、语义模型和 Odoo 权限治理持续展开。
+第一批技术博客已经覆盖 raw SQL、MCP tool boundary、Odoo 权限、语义模型、澄清/拒绝、审计、部署边界、用户上下文和指标治理。
 
-| 优先级 | 选题 | 主题 |
-|---|---|---|
-| P2 | AI-driven analytics 不能只靠 LLM + SQL：指标口径、权限和复核流程缺一不可 | metrics governance、BI、review workflow |
+后续可以继续展开：
+
+- Odoo 多公司 / 多租户 AI 查询的工程细节；
+- 语义模型版本管理和灰度发布；
+- AI 查询结果的缓存、预聚合和性能边界；
+- 从只读问数到受控业务动作的 tool design。
 
 ## 写作边界
 

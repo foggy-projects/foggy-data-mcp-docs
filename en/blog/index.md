@@ -10,3 +10,4 @@ The technical blog is currently maintained in Chinese.
 - [Semantic query capability layers](/zh/blog/semantic-query-capability-layers)
 - [Odoo AI query deployment boundaries](/zh/blog/odoo-ai-query-deployment-boundaries)
 - [Effective user context for AI tools](/zh/blog/effective-user-context-ai-tools)
+- [AI-driven analytics needs metrics governance](/zh/blog/ai-driven-analytics-metrics-governance)
