@@ -207,6 +207,20 @@ export default defineConfig({
               ]
             },
             {
+              text: 'v2.0',
+              items: [
+                { text: '概览', link: '/zh/whitepaper/v2.0/' },
+                { text: '发布说明', link: '/zh/whitepaper/v2.0/v2.0-release-note' },
+                { text: '技术白皮书', link: '/zh/whitepaper/v2.0/foggy-data-mcp-technical-whitepaper-v2.0' },
+                { text: 'DSL_CTE 能力参考', link: '/zh/whitepaper/v2.0/dsl-cte-capability-reference' },
+                { text: '受治理表达式参考', link: '/zh/whitepaper/v2.0/governed-expression-reference' },
+                { text: 'Memory Grid 参考', link: '/zh/whitepaper/v2.0/memory-grid-reference' },
+                { text: 'Pivot v2 参考', link: '/zh/whitepaper/v2.0/pivot-v2-reference' },
+                { text: 'Experience Recipe 参考', link: '/zh/whitepaper/v2.0/experience-recipe-reference' },
+                { text: 'v1/v2 能力对照', link: '/zh/whitepaper/v2.0/compatibility-matrix' }
+              ]
+            },
+            {
               text: 'v1.0',
               items: [
                 { text: '概览', link: '/zh/whitepaper/v1.0/' },

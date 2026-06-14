@@ -5,8 +5,11 @@
   "description": "Foggy Data MCP Documentation Site",
   "scripts": {
     "dev": "vitepress dev",
+    "dev:lan": "vitepress dev --host 0.0.0.0",
     "build": "node scripts/copy-downloads.js && vitepress build",
-    "preview": "vitepress preview"
+    "preview": "vitepress preview",
+    "preview:lan": "vitepress preview --host 0.0.0.0",
+    "serve:lan": "npm run build && node scripts/serve-lan.js"
   },
   "devDependencies": {
     "vitepress": "^1.5.0"

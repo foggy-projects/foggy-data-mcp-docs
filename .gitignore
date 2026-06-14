@@ -1,4 +1,5 @@
 node_modules/
 .vitepress/dist/
 .vitepress/cache/
+screenlog.*
 zh/whitepaper/foggy-data-mcp-whitepaper-review.md
