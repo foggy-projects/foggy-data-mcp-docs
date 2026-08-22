@@ -28,7 +28,9 @@
 | Header | 说明 | 必填 |
 |--------|------|:----:|
 | `Content-Type` | `application/json` | ✅ |
-| `Authorization` | 认证信息 | ❌ |
+| `X-NS` | namespace，隔离模型和数据源 | 建议 |
+| `Authorization` | 可选 opaque 业务身份 | ❌ |
+| `X-Foggy-Runtime-Code` | Runtime 管理认证（启用 auth-code 时） | 按部署 |
 | `X-Trace-Id` | 会话追踪 ID | ❌ |
 
 ## 核心方法
@@ -67,7 +69,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     },
     "serverInfo": {
       "name": "foggy-mcp-server",
-      "version": "8.0.1"
+      "version": "runtime-reported"
     }
   }
 }
@@ -96,8 +98,8 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
   "result": {
     "tools": [
       {
-        "name": "dataset.get_metadata",
-        "description": "获取用户可访问的语义层模型列表",
+        "name": "dataset.list_models",
+        "description": "获取当前 namespace 的模型路由概览",
         "inputSchema": {
           "type": "object",
           "properties": {}
@@ -132,7 +134,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     "id": "3",
     "method": "tools/call",
     "params": {
-      "name": "dataset.get_metadata",
+      "name": "dataset.list_models",
       "arguments": {}
     }
   }'
@@ -181,7 +183,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     "id": "1",
     "method": "tools/call",
     "params": {
-      "name": "dataset.get_metadata",
+      "name": "dataset.list_models",
       "arguments": {}
     }
   }'
@@ -301,7 +303,7 @@ async function callMcpTool(toolName, args) {
 }
 
 // 使用示例
-const metadata = await callMcpTool('dataset.get_metadata', {});
+const metadata = await callMcpTool('dataset.list_models', {});
 console.log(metadata.models);
 ```
 
@@ -331,7 +333,7 @@ def call_mcp_tool(tool_name, args=None):
     return json.loads(result['result']['content'][0]['text'])
 
 # 使用示例
-metadata = call_mcp_tool('dataset.get_metadata')
+metadata = call_mcp_tool('dataset.list_models')
 print(metadata['models'])
 ```
 

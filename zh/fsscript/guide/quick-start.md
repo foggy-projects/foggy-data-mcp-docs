@@ -1,5 +1,7 @@
 # 快速开始
 
+> 当前 Java bridge 源码使用 `9.2.0-SNAPSHOT`。下面的 Maven 片段仅适用于从源码构建的本地 reactor。
+
 ## 环境要求
 
 - **JDK**: 17 及以上版本
@@ -11,7 +13,7 @@
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-fsscript</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 

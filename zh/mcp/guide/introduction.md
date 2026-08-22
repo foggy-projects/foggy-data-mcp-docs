@@ -1,5 +1,7 @@
 # 简介
 
+> 当前 Java Runtime 的部署与验收以运行实例的能力探测和实际接口为准；本页保留 MCP 产品概览和兼容接入说明。
+
 Foggy MCP 服务实现 [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) 协议，为 AI 助手提供数据查询能力。
 
 ## 核心特性
@@ -135,7 +137,7 @@ orders.data->>'addr' →    deliveryAddress     →   "收货地址"
 
 ```bash
 # 克隆项目
-git clone https://github.com/nicecho/foggy-data-mcp-bridge.git
+git clone https://github.com/foggy-projects/foggy-data-mcp-bridge.git
 cd foggy-data-mcp-bridge/docker/demo
 
 # 配置 API Key

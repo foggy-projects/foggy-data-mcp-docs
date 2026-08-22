@@ -2,6 +2,10 @@
 
 `dataset.query_model` 是核心数据查询工具，支持复杂的过滤、排序、分组和聚合操作。
 
+它面向单个 Query Model。需要跨模型 Join/Union、derived 或多阶段计划时使用 `dataset.compose_script`；需要查看编译计划或 SQL/物理映射时使用 `dataset.explain_query`。这些工具仍受当前 namespace、模型权限和运行实例 schema 限制。
+
+> 不要把原始 SQL、自由 CTE 或 `fieldAccess`、`deniedColumns`、`systemSlice` 等内部治理字段作为普通 MCP 输入。DSL_CTE、Pivot、timeWindow 和 calculatedFields 的可用性以当前 `tools/list`、capabilities 和 schema 为准。
+
 ## 基本信息
 
 - **工具名称**: `dataset.query_model`

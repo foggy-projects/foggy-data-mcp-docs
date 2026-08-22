@@ -2,6 +2,8 @@
 
 This document introduces the HTTP query interface of Foggy Dataset Model. For complete DSL syntax, please refer to [JSON Query DSL](../tm-qm/query-dsl.md).
 
+> This page documents the compatible `/jdbc-model/query-model/v2` surface for an embedded Dataset Model application. Java Runtime management, model lifecycle, and governed queries use `/api/v1/...`; these are different HTTP contracts.
+
 ## 1. Overview
 
 ### 1.1 Basic Information

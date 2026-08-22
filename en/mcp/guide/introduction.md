@@ -1,5 +1,7 @@
 # Introduction
 
+> For Java Runtime deployment and acceptance, use the running instance's capability discovery and actual API responses as the source of truth; this page retains the MCP product overview and compatibility integration notes.
+
 Foggy MCP Service implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) protocol, providing data query capabilities for AI assistants.
 
 ## Core Features
@@ -135,7 +137,7 @@ Provides different MCP toolsets and permissions based on user roles:
 
 ```bash
 # Clone project
-git clone https://github.com/nicecho/foggy-data-mcp-bridge.git
+git clone https://github.com/foggy-projects/foggy-data-mcp-bridge.git
 cd foggy-data-mcp-bridge/docker/demo
 
 # Configure API Key

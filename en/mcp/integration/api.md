@@ -28,7 +28,9 @@ All requests use JSON-RPC 2.0 format:
 | Header | Description | Required |
 |--------|-------------|:--------:|
 | `Content-Type` | `application/json` | ✅ |
-| `Authorization` | Authentication info | ❌ |
+| `X-NS` | Namespace isolating models and datasources | Recommended |
+| `Authorization` | Optional opaque business identity | ❌ |
+| `X-Foggy-Runtime-Code` | Runtime management auth when auth-code is enabled | Deployment-dependent |
 | `X-Trace-Id` | Session trace ID | ❌ |
 
 ## Core Methods
@@ -67,7 +69,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     },
     "serverInfo": {
       "name": "foggy-mcp-server",
-      "version": "8.0.1"
+      "version": "runtime-reported"
     }
   }
 }
@@ -96,8 +98,8 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
   "result": {
     "tools": [
       {
-        "name": "dataset.get_metadata",
-        "description": "Get user-accessible semantic layer model list",
+        "name": "dataset.list_models",
+        "description": "Get the model routing overview for the current namespace",
         "inputSchema": {
           "type": "object",
           "properties": {}
@@ -132,7 +134,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     "id": "3",
     "method": "tools/call",
     "params": {
-      "name": "dataset.get_metadata",
+      "name": "dataset.list_models",
       "arguments": {}
     }
   }'
@@ -181,7 +183,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
     "id": "1",
     "method": "tools/call",
     "params": {
-      "name": "dataset.get_metadata",
+      "name": "dataset.list_models",
       "arguments": {}
     }
   }'

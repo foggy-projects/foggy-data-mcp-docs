@@ -6,12 +6,16 @@ Foggy MCP provides a series of data query and analysis tools for AI assistants t
 
 | Tool | Description | Category |
 |------|-------------|----------|
-| [`dataset.get_metadata`](./metadata.md#get_metadata) | Get user-accessible model list | Metadata |
+| [`dataset.list_models`](./metadata.md#list_models) | Preferred model discovery and routing overview | Metadata |
 | [`dataset.describe_model_internal`](./metadata.md#describe_model_internal) | Get model field details | Metadata |
 | [`dataset.query_model`](./query.md) | Execute structured query, timeWindow, and pivot | Query |
+| [`dataset.compose_script`](./query.md) | Execute governed Compose/cross-model query | Query |
+| [`dataset.explain_query`](./query.md) | Return query definition, recompilation, and evidence | Explain |
 | [`dataset_nl.query`](./nl-query.md) | Natural language data query | Natural Language |
 | `chart.generate` | Generate data charts | Visualization |
-| `dataset.export_with_chart` | Export data and charts | Export |
+| `dataset.export_with_xchart` | Export with JVM-native XChart | Export |
+| `dataset.export_with_echarts` | Export with an ECharts render service | Export |
+| `dataset.get_metadata` | Legacy metadata entry point | Compatibility |
 
 ## Tool Categories
 
@@ -19,8 +23,10 @@ Foggy MCP provides a series of data query and analysis tools for AI assistants t
 
 Used to get meta-information about semantic layer models and fields:
 
-- **get_metadata** - Get overview of all available models
+- **list_models** - Preferred model list and routing overview
 - **describe_model_internal** - Get detailed field definitions of a single model
+
+`dataset.get_metadata` remains for compatibility and migration; new integrations should not use it as the first step.
 
 Suitable for understanding data structure before querying.
 
@@ -29,6 +35,8 @@ Suitable for understanding data structure before querying.
 Used to execute structured data queries:
 
 - **query_model** - Supports filtering, sorting, grouping, aggregation, calculated fields, `timeWindow`, and `pivot`
+- **compose_script** - Use for cross-model Join/Union, derived, or multi-stage composition
+- **explain_query** - Return definition, recompilation, and optional SQL/physical-name evidence; recompilation is not a historical execution trace
 
 Requires understanding of semantic layer models and query syntax, provides precise query control.
 
@@ -50,7 +58,8 @@ Used to generate charts:
 
 Used to export data:
 
-- **export_with_chart** - Export query results and charts
+- **export_with_xchart** - JVM-native export with no external render service
+- **export_with_echarts** - ECharts export through an external render service
 
 ## Role Permissions
 
@@ -60,11 +69,14 @@ Different endpoints provide different tool sets:
 
 | Tool | Admin | Analyst | Business |
 |------|:-----:|:-------:|:--------:|
-| `dataset.get_metadata` | ✅ | ✅ | ❌ |
+| `dataset.list_models` | ✅ | ✅ | ❌ |
 | `dataset.describe_model_internal` | ✅ | ✅ | ❌ |
 | `dataset.query_model` | ✅ | ✅ | ❌ |
+| `dataset.compose_script` | ✅ | ✅ | ❌ |
+| `dataset.explain_query` | ✅ | ✅ | ❌ |
 | `chart.generate` | ✅ | ✅ | ❌ |
-| `dataset.export_with_chart` | ✅ | ✅ | ❌ |
+| `dataset.export_with_xchart` | ✅ | ✅ | ❌ |
+| `dataset.export_with_echarts` | ✅ | ✅ | ❌ |
 | `dataset_nl.query` | ✅ | ❌ | ✅ |
 
 ### Endpoint Description
@@ -80,10 +92,11 @@ Different endpoints provide different tool sets:
 ### Analyst Workflow
 
 ```
-1. get_metadata          → Get available model list
+1. list_models            → Get model routing overview
 2. describe_model_internal → View model field details
-3. query_model           → Execute data query
-4. chart.generate        → Generate chart (optional)
+3. query_model / compose_script → Execute single-model or composed query
+4. explain_query          → Inspect recompilation evidence (optional)
+5. chart.generate / export → Generate chart or export (optional)
 ```
 
 ### Business User Workflow
@@ -102,11 +115,13 @@ Different endpoints provide different tool sets:
   "id": "1",
   "method": "tools/call",
   "params": {
-    "name": "dataset.get_metadata",
+    "name": "dataset.list_models",
     "arguments": {}
   }
 }
 ```
+
+Treat `tools/list` on the running endpoint as the source of truth; the visible tool set can vary by namespace, endpoint, and tool policy. `dataset.get_metadata` is retained only for compatibility migration and must not be a new client's first call.
 
 ### Response Format
 
@@ -151,7 +166,7 @@ Tool calls may return the following errors:
 
 ## Performance Tips
 
-1. **Get metadata first**: Use `get_metadata` before querying to understand available models
+1. **Discover models first**: Use `list_models`, then `describe_model_internal` when field details are needed
 2. **Use pagination**: Use `start` and `limit` parameters for large data queries
 3. **Add filter conditions**: Avoid full table scans, use `slice` to filter data
 4. **Select necessary fields**: Only query needed `columns` to reduce data transfer

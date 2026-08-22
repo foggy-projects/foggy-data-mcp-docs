@@ -2,6 +2,8 @@
 
 This guide helps you create TM/QM models and use DSL for queries in 10 minutes.
 
+> The current Java bridge source uses `9.2.0-SNAPSHOT`. The dependencies below apply only to a local reactor built from source.
+
 ## 1. Environment Setup
 
 If you are not a Java developer, it is recommended to use Docker for experience, see (TODO)
@@ -24,7 +26,7 @@ Add Foggy Dataset Model dependency in `pom.xml`:
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-model</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -36,7 +38,7 @@ If you are creating a new project, you need to add the following dependencies:
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.5</version>
 </parent>
 
 <dependencies>
@@ -56,7 +58,7 @@ If you are creating a new project, you need to add the following dependencies:
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-model</artifactId>
-        <version>8.1.10.beta</version>
+        <version>9.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Database drivers (choose one according to actual situation) -->
@@ -425,7 +427,9 @@ export const queryModel = {
 
 ---
 
-## 8. Start and Test
+## 8. Start and Test (Embedded Dataset Model API)
+
+This section retains the compatible `/jdbc-model/query-model/v2` path for an embedded Spring Boot application. New deployments or MCP/Runtime integrations should use the running instance's `/api/v1/...` contract; they are different HTTP contracts.
 
 ### 8.1 Start Project
 

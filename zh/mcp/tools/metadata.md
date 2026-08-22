@@ -2,7 +2,29 @@
 
 元数据工具用于获取语义层模型和字段的定义信息，是查询前了解数据结构的重要工具。
 
+## list_models
+
+首选的模型发现工具。它返回当前 namespace 中可用于路由的模型概览；需要字段、度量、权限或查询能力详情时，再调用 `dataset.describe_model_internal`。返回字段以运行实例 `tools/list` 暴露的 schema 为准，不要把模型列表缓存跨 namespace 复用。
+
+### 基本信息
+
+- **工具名称**: `dataset.list_models`
+- **分类**: 元数据
+- **权限**: 以当前 MCP endpoint 和 namespace 的工具策略为准
+
+### 推荐调用顺序
+
+```text
+dataset.list_models
+  → dataset.describe_model_internal
+  → dataset.query_model 或 dataset.compose_script
+```
+
+---
+
 ## get_metadata
+
+> **兼容性说明**：`dataset.get_metadata` 是旧元数据入口。新集成应使用 `dataset.list_models`；保留本节是为了迁移旧客户端。
 
 获取用户可访问的所有语义层模型列表。
 

@@ -1,5 +1,7 @@
 # Quick Start
 
+> The current Java bridge source uses `9.2.0-SNAPSHOT`. The Maven snippet applies only to a local reactor built from source.
+
 ## Requirements
 
 - **JDK**: 17 or above
@@ -11,7 +13,7 @@
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-fsscript</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 

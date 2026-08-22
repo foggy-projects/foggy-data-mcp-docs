@@ -2,6 +2,8 @@
 
 Foggy MCP Service implements the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) protocol, providing data query capabilities for AI assistants.
 
+The current Java bridge is namespace-aware. Use `X-NS` to select the isolated model/datasource context and discover the actual tool surface with `tools/list`. The preferred routing is `dataset.list_models` → `dataset.describe_model_internal` → `dataset.query_model` or `dataset.compose_script`; `dataset.get_metadata` is retained for compatibility. `dataset.export_with_xchart` is JVM-native, while `dataset.export_with_echarts` uses an optional external render service.
+
 ## Overall Architecture
 
 ```
@@ -148,6 +150,18 @@ Core semantic layer engine:
 │        Use PreparedStatement to prevent SQL injection            │
 └─────────────────────────────────────────────────────────────────┘
 ```
+
+## Request headers and trust boundaries
+
+| Header | Purpose | Required |
+| --- | --- | :---: |
+| `X-NS` | Select the namespace and isolate models, datasources, and query context | Recommended |
+| `Authorization` | Optional opaque business identity passed to policy logic | No |
+| `X-Foggy-Runtime-Code` | Runtime management authentication when auth-code is enabled | Deployment-dependent |
+| `X-Trace-Id` | Correlate an AI session across tool calls | No |
+| `X-Request-Id` | Correlate one HTTP request | No |
+
+Business `Authorization` cannot replace or elevate the management code, and query payloads cannot self-submit column or row policy parameters. Rediscover models after switching `X-NS`.
 
 ## Next Steps
 

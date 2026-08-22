@@ -2,6 +2,8 @@
 
 本文档介绍 Foggy Dataset Model 的 HTTP 查询接口。完整的 DSL 语法请参阅 [JSON 查询 DSL](../tm-qm/query-dsl.md)。
 
+> 本页描述嵌入式 Dataset Model 的兼容查询面 `/jdbc-model/query-model/v2`。Java Runtime 的管理、模型生命周期和受治理查询使用 `/api/v1/...`，两者不是同一个 HTTP 契约。
+
 ## 1. 概述
 
 ### 1.1 基础信息

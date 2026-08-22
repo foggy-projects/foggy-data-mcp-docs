@@ -4,6 +4,10 @@
 
 Use `dataset.compose_script` instead when the request needs cross-model Join / Union, derived queries based on a previous plan, or multiple returned plans.
 
+Use `dataset.explain_query` when compilation-plan or SQL/physical mapping evidence is required. All three routes remain constrained by namespace, model policy, and the running instance schema.
+
+> Do not pass raw SQL, free-form CTE, or internal governance fields such as `fieldAccess`, `deniedColumns`, or `systemSlice` as normal MCP input. Availability of DSL_CTE, Pivot, timeWindow, and calculatedFields follows the current `tools/list`, capabilities, and schema.
+
 ## Basic Information
 
 - **Tool Name**: `dataset.query_model`

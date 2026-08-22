@@ -92,7 +92,7 @@ Claude Desktop 的 MCP 配置文件位于：
 启动 Claude Desktop 后，可以通过以下方式验证：
 
 1. 在对话框中输入：`有哪些可用的语义层模型？`
-2. Claude 应该调用 `dataset.get_metadata` 工具并返回模型列表
+2. Claude 应该调用 `dataset.list_models` 工具并返回模型路由概览
 
 如果 Claude 无法识别 MCP 工具，请检查：
 - 配置文件 JSON 格式是否正确

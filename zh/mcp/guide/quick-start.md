@@ -2,6 +2,10 @@
 
 本指南帮助你快速启动 Foggy MCP 服务并连接 AI 客户端。
 
+> **当前推荐路径**：本地验证使用 `foggy-runtime-launcher v0.1.17`，默认地址为 `http://127.0.0.1:18066`。下文 Docker/源码路径用于构建当前源码和深度集成。
+
+> **版本说明**：下文 Maven 片段中的 `9.2.0-SNAPSHOT` 仅适用于从 bridge 源码构建的本地 reactor，不代表已发布的稳定制品。历史 `8.1.10.beta` 示例已失效。
+
 ## 选择你的方式
 
 根据你的背景选择合适的入门路径：
@@ -59,7 +63,9 @@ docker-compose logs -f mcp
 
 ### 3.1 启用图表功能（可选）
 
-如需使用 `export_with_chart` 工具生成可视化图表，需额外部署图表渲染服务：
+如需使用 `dataset.export_with_echarts` 工具生成可视化图表，需额外部署 ECharts 渲染服务。
+
+`dataset.export_with_xchart` 使用 JVM 原生 XChart，不需要此服务。
 
 ```bash
 # 进入图表服务目录
@@ -139,7 +145,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.5</version>
 </parent>
 
 <dependencies>
@@ -153,7 +159,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
     <dependency>    
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-mcp</artifactId>
-        <version>8.1.10.beta</version>
+        <version>9.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- 数据库驱动（根据实际情况选择） -->
@@ -173,7 +179,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-mcp</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -186,7 +192,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-demo</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -277,7 +283,7 @@ mvn spring-boot:run
 
 ### 5.1 启用图表功能（可选）
 
-如需使用 `export_with_chart` 工具，需部署图表渲染服务：
+如需使用 `dataset.export_with_echarts` 工具，需部署 ECharts 渲染服务；`dataset.export_with_xchart` 不需要外部渲染服务：
 
 ```bash
 docker run -d --name chart-render \
@@ -376,7 +382,7 @@ curl -X POST http://localhost:7108/mcp/analyst/rpc \
 ```
 
 ::: tip 图表功能
-如需生成可视化图表，请先部署[图表渲染服务](./chart-render-service.md)。
+只有使用 `dataset.export_with_echarts` 时才需要先部署[图表渲染服务](./chart-render-service.md)；XChart 路径不需要。
 :::
 
 ---

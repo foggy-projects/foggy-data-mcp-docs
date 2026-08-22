@@ -2,7 +2,29 @@
 
 Metadata tools are used to get semantic layer model and field definition information, essential tools for understanding data structure before querying.
 
+## list_models
+
+The preferred model-discovery tool. It returns a routing-oriented overview for the current namespace. Call `dataset.describe_model_internal` when field, measure, policy, or query-capability details are needed. The response schema follows the running instance's `tools/list` output; do not reuse a model list across namespaces.
+
+### Basic Information
+
+- **Tool Name**: `dataset.list_models`
+- **Category**: Metadata
+- **Permission**: determined by the current MCP endpoint and namespace tool policy
+
+### Recommended sequence
+
+```text
+dataset.list_models
+  → dataset.describe_model_internal
+  → dataset.query_model or dataset.compose_script
+```
+
+---
+
 ## get_metadata
+
+> **Compatibility note**: `dataset.get_metadata` is the legacy metadata entry point. New integrations should use `dataset.list_models`; this section remains for older clients.
 
 Get all semantic layer models accessible by the user.
 

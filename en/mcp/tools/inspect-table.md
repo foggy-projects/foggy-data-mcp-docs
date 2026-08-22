@@ -1,6 +1,8 @@
 # inspect_table Tool
 
-The `dataset.inspect_table` tool is used to directly retrieve table structure metadata from the database, assisting AI in generating TM/QM model files.
+`dataset.inspect_table` is an Admin-only MCP tool for retrieving table structure metadata from the database and assisting AI in generating TM/QM model files. It is exposed through `/mcp/admin/rpc` and is not guaranteed to appear in the analyst endpoint's `tools/list`.
+
+This is not the same contract as the Runtime management route `POST /api/v1/tables/inspect`: the Runtime API uses fields such as `table` and `dataSource`, while this MCP tool uses the snake_case fields in the table below.
 
 ## Feature Overview
 
@@ -30,7 +32,6 @@ AI:   [Call dataset.inspect_table to get table structure]
 | `database_type` | string | No | Database type: `jdbc` or `mongo` (optional, default `jdbc`) |
 | `include_indexes` | boolean | No | Whether to include index information (default false) |
 | `include_foreign_keys` | boolean | No | Whether to include foreign key relationships (default true) |
-| `include_sample_data` | boolean | No | Whether to include sample data for dictionary inference (default false, max 10 rows) |
 
 ## Return Structure
 
@@ -188,9 +189,12 @@ mcp:
 
 | Tool | Data Source | Purpose |
 |------|-------------|---------|
-| `dataset.get_metadata` | TM/QM files | Query defined model metadata |
+| `dataset.list_models` | Runtime model catalog | Preferred model discovery; routing information only |
 | `dataset.describe_model_internal` | TM/QM files | View single model details |
+| `dataset.get_metadata` | TM/QM files | Legacy metadata entry point for compatibility migration |
 | **`dataset.inspect_table`** | **Database** | **Reverse engineer table structure from database** |
+
+New integrations must not use `dataset.get_metadata` for first-pass discovery. Use `dataset.list_models`, then call `dataset.describe_model_internal`.
 
 ## Workflow Example
 

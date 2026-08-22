@@ -104,21 +104,25 @@ MCP 工具按功能分为以下类别：
 
 | 类别 | 说明 | 包含工具 |
 |------|------|----------|
-| **元数据管理** | 查询语义层元数据 | `get_metadata`, `description_model_internal` |
-| **数据查询** | 结构化数据查询 | `query_model` |
+| **元数据管理** | 查询语义层元数据 | `list_models`, `describe_model_internal`（`get_metadata` 为兼容入口） |
+| **数据查询** | 结构化和组合查询 | `query_model`, `compose_script` |
+| **查询解释** | 计划和证据解释 | `explain_query` |
 | **自然语言** | AI 驱动的智能查询 | `dataset_nl.query` |
-| **数据可视化** | 图表生成 | `generate_chart` |
-| **数据导出** | 数据导出功能 | `export_with_chart` |
+| **数据可视化** | 图表生成 | `chart.generate` |
+| **数据导出** | 数据导出功能 | `export_with_xchart`, `export_with_echarts` |
 
 ### 角色-工具权限矩阵
 
 | 工具 | Admin | Analyst | Business |
 |------|:-----:|:-------:|:--------:|
-| `dataset.get_metadata` | ✅ | ✅ | ❌ |
-| `dataset.description_model_internal` | ✅ | ✅ | ❌ |
+| `dataset.list_models` | ✅ | ✅ | ❌ |
+| `dataset.describe_model_internal` | ✅ | ✅ | ❌ |
 | `dataset.query_model` | ✅ | ✅ | ❌ |
-| `dataset.generate_chart` | ✅ | ✅ | ❌ |
-| `dataset.export_with_chart` | ✅ | ✅ | ❌ |
+| `dataset.compose_script` | ✅ | ✅ | ❌ |
+| `dataset.explain_query` | ✅ | ✅ | ❌ |
+| `chart.generate` | ✅ | ✅ | ❌ |
+| `dataset.export_with_xchart` | ✅ | ✅ | ❌ |
+| `dataset.export_with_echarts` | ✅ | ✅ | ❌ |
 | `dataset_nl.query` | ✅ | ❌ | ✅ |
 
 ## HTTP Headers
@@ -127,7 +131,9 @@ MCP 服务支持以下 HTTP Headers：
 
 | Header | 说明 | 必填 |
 |--------|------|:----:|
-| `Authorization` | 认证信息，传递给后端服务 | 否 |
+| `X-NS` | 选择 namespace，隔离模型、数据源和查询上下文 | 建议 |
+| `Authorization` | 可选的 opaque 业务身份，传递给权限逻辑 | 否 |
+| `X-Foggy-Runtime-Code` | Runtime 管理认证（启用 auth-code 时） | 按部署 |
 | `X-Trace-Id` | AI 会话追踪 ID，贯穿多次工具调用 | 否 |
 | `X-Request-Id` | 单次 HTTP 请求 ID | 否 |
 
@@ -135,6 +141,8 @@ MCP 服务支持以下 HTTP Headers：
 - `X-Trace-Id`: 标识一次完整的 AI 会话，同一会话的多次工具调用共享此 ID
 - `X-Request-Id`: 标识单次 HTTP 请求，每次请求生成新的 ID
 - 如果客户端未提供，服务端会自动生成 UUID
+
+`Authorization` 不能替代 `X-Foggy-Runtime-Code`，也不能在 query payload 中自行提交列/行权限参数。切换 `X-NS` 后应重新执行模型发现。
 
 ## 部署架构
 

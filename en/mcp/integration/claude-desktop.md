@@ -92,7 +92,7 @@ Suitable for non-technical users who only need to describe requirements in natur
 After starting Claude Desktop, verify with:
 
 1. Type in chat: `What semantic layer models are available?`
-2. Claude should call the `dataset.get_metadata` tool and return model list
+2. Claude should call the `dataset.list_models` tool and return the model routing overview
 
 If Claude cannot recognize MCP tools, check:
 - Configuration file JSON format is correct

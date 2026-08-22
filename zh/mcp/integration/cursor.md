@@ -127,7 +127,7 @@ interface User {
 1. 重启 Cursor
 2. 打开 AI Chat（Cmd/Ctrl + L）
 3. 输入：`列出可用的语义层模型`
-4. 确认 Claude 能调用 `dataset.get_metadata` 工具
+4. 确认客户端能调用 `dataset.list_models` 工具
 
 ## 故障排查
 

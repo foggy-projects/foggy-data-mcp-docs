@@ -2,6 +2,10 @@
 
 The chart render service (chart-render-service) is a standalone Node.js microservice for rendering query data into visual charts.
 
+> This service is only for the external rendering path of `dataset.export_with_echarts`. `dataset.export_with_xchart` is JVM-native and does not require it; the retired `dataset.export_with_chart` name is not the current tool contract.
+
+The service handles business data. In production, control input size, timeouts, network egress, tokens, and cloud-storage permissions, and include the path in audit coverage.
+
 ## Features
 
 - Multiple chart types: line, bar, pie, scatter, area

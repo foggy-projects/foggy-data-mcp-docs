@@ -2,6 +2,10 @@
 
 This guide helps you quickly launch Foggy MCP service and connect AI clients.
 
+> **Recommended current path**: for local validation, use `foggy-runtime-launcher v0.1.17` at `http://127.0.0.1:18066`. The Docker/source path below is for building the current source and deeper integration.
+
+> **Version note**: Maven snippets below use `9.2.0-SNAPSHOT` only for a local reactor built from bridge source; they do not claim a stable published artifact. Historical `8.1.10.beta` snippets are obsolete.
+
 ## Choose Your Path
 
 Select the approach that fits your background:
@@ -57,7 +61,9 @@ docker-compose logs -f mcp
 
 ### 3.1 Enable Chart Feature (Optional)
 
-To use the `export_with_chart` tool for generating visual charts, deploy the chart render service:
+To use `dataset.export_with_echarts` for visual chart export, deploy the ECharts render service.
+
+`dataset.export_with_xchart` is JVM-native and does not require this service.
 
 ```bash
 # Enter chart service directory
@@ -137,7 +143,7 @@ For new projects, add to `pom.xml`:
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.5</version>
 </parent>
 
 <dependencies>
@@ -151,7 +157,7 @@ For new projects, add to `pom.xml`:
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-mcp</artifactId>
-        <version>8.1.10.beta</version>
+        <version>9.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- Database Driver (choose based on your needs) -->
@@ -171,7 +177,7 @@ For existing Spring Boot projects with datasource configured, just add:
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-mcp</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -184,7 +190,7 @@ If you don't have your own semantic layer yet, add the demo module for a quick e
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-demo</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -335,7 +341,7 @@ mvn spring-boot:run
 
 ### 5.1 Enable Chart Feature (Optional)
 
-To use the `export_with_chart` tool, deploy the chart render service:
+To use `dataset.export_with_echarts`, deploy the ECharts render service; `dataset.export_with_xchart` does not require an external render service:
 
 ```bash
 docker run -d --name chart-render \

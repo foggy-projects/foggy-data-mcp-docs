@@ -1,6 +1,8 @@
 # inspect_table 工具
 
-`dataset.inspect_table` 工具用于从数据库直接获取表结构元数据，辅助 AI 生成 TM/QM 模型文件。
+`dataset.inspect_table` 是 Admin-only MCP 工具，用于从数据库直接获取表结构元数据，辅助 AI 生成 TM/QM 模型文件。它通过 `/mcp/admin/rpc` 暴露，不保证出现在 analyst endpoint 的 `tools/list` 中。
+
+这与 Runtime 管理面的 `POST /api/v1/tables/inspect` 不是同一个契约：Runtime API 使用 `table`、`dataSource` 等请求字段；本 MCP 工具使用下表中的 snake_case 字段。
 
 ## 功能概述
 
@@ -30,7 +32,6 @@ AI:   [调用 dataset.inspect_table 获取表结构]
 | `database_type` | string | 否 | 数据库类型：`jdbc` 或 `mongo`（可选，默认 `jdbc`） |
 | `include_indexes` | boolean | 否 | 是否包含索引信息（默认 false） |
 | `include_foreign_keys` | boolean | 否 | 是否包含外键关系（默认 true） |
-| `include_sample_data` | boolean | 否 | 是否包含样例数据用于推断字典（默认 false，最多10条） |
 
 ## 返回结构
 
@@ -188,9 +189,12 @@ mcp:
 
 | 工具 | 数据来源 | 用途 |
 |------|----------|------|
-| `dataset.get_metadata` | TM/QM 文件 | 查询已定义的模型元数据 |
+| `dataset.list_models` | Runtime 模型 catalog | 首选模型发现，只返回路由信息 |
 | `dataset.describe_model_internal` | TM/QM 文件 | 查看单个模型详情 |
+| `dataset.get_metadata` | TM/QM 文件 | 旧元数据入口，仅用于兼容迁移 |
 | **`dataset.inspect_table`** | **数据库** | **从数据库反向获取表结构** |
+
+新集成不要用 `dataset.get_metadata` 做首轮发现；使用 `dataset.list_models`，再调用 `dataset.describe_model_internal`。
 
 ## 工作流示例
 

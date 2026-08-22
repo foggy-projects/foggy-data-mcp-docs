@@ -2,6 +2,8 @@
 
 本指南帮助你在 10 分钟内创建 TM/QM 模型并使用 DSL 进行查询。
 
+> 当前 Java bridge 源码使用 `9.2.0-SNAPSHOT`。以下依赖只适用于从源码构建的本地 reactor。
+
 ## 1. 环境准备
 
 如果您不是java 开发者，建议使用docker的方式进行体验，详见（TODO）
@@ -24,7 +26,7 @@
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-model</artifactId>
-    <version>8.1.10.beta</version>
+    <version>9.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -36,7 +38,7 @@
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.5</version>
 </parent>
 
 <dependencies>
@@ -56,7 +58,7 @@
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-model</artifactId>
-        <version>8.1.10.beta</version>
+        <version>9.2.0-SNAPSHOT</version>
     </dependency>
 
     <!-- 数据库驱动（根据实际情况选择一个） -->
@@ -424,7 +426,9 @@ export const queryModel = {
 
 ---
 
-## 8. 启动和测试
+## 8. 启动和测试（嵌入式 Dataset Model API）
+
+本节保留 Spring Boot 嵌入式应用的 `/jdbc-model/query-model/v2` 兼容路径。新部署或 MCP/Runtime 接入应使用运行实例提供的 `/api/v1/...` 契约；两者不是同一个 HTTP 契约。
 
 ### 8.1 启动项目
 

@@ -2,6 +2,10 @@
 
 图表渲染服务（chart-render-service）是一个独立的 Node.js 微服务，用于将查询数据渲染为可视化图表。
 
+> 该服务只对应 `dataset.export_with_echarts` 的外部渲染路径。`dataset.export_with_xchart` 使用 JVM 原生 XChart，不需要部署本服务；旧的 `dataset.export_with_chart` 名称不再作为当前工具契约。
+
+渲染服务接收和输出的都是业务数据，生产环境必须限制输入大小、超时、网络出口、令牌和云存储权限，并纳入审计。
+
 ## 功能特性
 
 - 支持多种图表类型：折线图、柱状图、饼图、散点图、面积图
