@@ -4,7 +4,7 @@
 
 > **当前推荐路径**：本地验证使用 `foggy-runtime-launcher v0.1.17`，默认地址为 `http://127.0.0.1:18066`。下文 Docker/源码路径用于构建当前源码和深度集成。
 
-> **版本说明**：下文 Maven 片段中的 `9.2.0-SNAPSHOT` 仅适用于从 bridge 源码构建的本地 reactor，不代表已发布的稳定制品。历史 `8.1.10.beta` 示例已失效。
+> **版本说明**：下文 Maven 片段使用已发布的稳定版本 `9.2.0`。历史 `8.1.10.beta` 示例已失效。
 
 ## 选择你的方式
 
@@ -159,7 +159,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
     <dependency>    
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-mcp</artifactId>
-        <version>9.2.0-SNAPSHOT</version>
+        <version>9.2.0</version>
     </dependency>
 
     <!-- 数据库驱动（根据实际情况选择） -->
@@ -179,7 +179,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-mcp</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 
@@ -192,7 +192,7 @@ mvn spring-boot:run -pl foggy-mcp-launcher
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-demo</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 

@@ -4,7 +4,7 @@ This guide helps you quickly launch Foggy MCP service and connect AI clients.
 
 > **Recommended current path**: for local validation, use `foggy-runtime-launcher v0.1.17` at `http://127.0.0.1:18066`. The Docker/source path below is for building the current source and deeper integration.
 
-> **Version note**: Maven snippets below use `9.2.0-SNAPSHOT` only for a local reactor built from bridge source; they do not claim a stable published artifact. Historical `8.1.10.beta` snippets are obsolete.
+> **Version note**: Maven snippets below use the published stable release `9.2.0`. Historical `8.1.10.beta` snippets are obsolete.
 
 ## Choose Your Path
 
@@ -157,7 +157,7 @@ For new projects, add to `pom.xml`:
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-mcp</artifactId>
-        <version>9.2.0-SNAPSHOT</version>
+        <version>9.2.0</version>
     </dependency>
 
     <!-- Database Driver (choose based on your needs) -->
@@ -177,7 +177,7 @@ For existing Spring Boot projects with datasource configured, just add:
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-mcp</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 
@@ -190,7 +190,7 @@ If you don't have your own semantic layer yet, add the demo module for a quick e
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-demo</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 

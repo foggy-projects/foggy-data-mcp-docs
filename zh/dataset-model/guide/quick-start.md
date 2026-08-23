@@ -2,7 +2,7 @@
 
 本指南帮助你在 10 分钟内创建 TM/QM 模型并使用 DSL 进行查询。
 
-> 当前 Java bridge 源码使用 `9.2.0-SNAPSHOT`。以下依赖只适用于从源码构建的本地 reactor。
+> 当前 Java bridge 使用已发布的 `9.2.0` 制品。以下依赖使用稳定版本。
 
 ## 1. 环境准备
 
@@ -26,7 +26,7 @@
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-model</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-model</artifactId>
-        <version>9.2.0-SNAPSHOT</version>
+        <version>9.2.0</version>
     </dependency>
 
     <!-- 数据库驱动（根据实际情况选择一个） -->

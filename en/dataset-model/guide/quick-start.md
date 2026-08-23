@@ -2,7 +2,7 @@
 
 This guide helps you create TM/QM models and use DSL for queries in 10 minutes.
 
-> The current Java bridge source uses `9.2.0-SNAPSHOT`. The dependencies below apply only to a local reactor built from source.
+> The current Java bridge uses the published `9.2.0` artifact. The dependencies below use the stable release.
 
 ## 1. Environment Setup
 
@@ -26,7 +26,7 @@ Add Foggy Dataset Model dependency in `pom.xml`:
 <dependency>
     <groupId>com.foggysource</groupId>
     <artifactId>foggy-dataset-model</artifactId>
-    <version>9.2.0-SNAPSHOT</version>
+    <version>9.2.0</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@ If you are creating a new project, you need to add the following dependencies:
     <dependency>
         <groupId>com.foggysource</groupId>
         <artifactId>foggy-dataset-model</artifactId>
-        <version>9.2.0-SNAPSHOT</version>
+        <version>9.2.0</version>
     </dependency>
 
     <!-- Database drivers (choose one according to actual situation) -->
