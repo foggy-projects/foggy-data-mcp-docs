@@ -30,6 +30,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '快速开始', link: '/zh/mcp/guide/quick-start' },
+          { text: '实施手册', link: '/zh/implementation/' },
           {
             text: '技术文档',
             items: [
@@ -52,6 +53,22 @@ export default defineConfig({
           }
         ],
         sidebar: {
+          '/zh/implementation/': [
+            {
+              text: '实施手册',
+              items: [
+                { text: '总览与交付边界', link: '/zh/implementation/' },
+                { text: '运行时快速部署', link: '/zh/implementation/quick-start' },
+                { text: '能力基线与证据矩阵', link: '/zh/implementation/capability-matrix' },
+                { text: 'Runtime API 操作', link: '/zh/implementation/runtime-api' },
+                { text: 'Runtime API 与 MCP 示例', link: '/zh/implementation/runtime-api-examples' },
+                { text: 'MCP 工具与查询路由', link: '/zh/implementation/mcp-operations' },
+                { text: '模型与 Bundle 生命周期', link: '/zh/implementation/model-lifecycle' },
+                { text: '安全与治理', link: '/zh/implementation/security-governance' },
+                { text: '运维手册', link: '/zh/implementation/operations-runbook' }
+              ]
+            }
+          ],
           '/zh/fsscript/': [
             {
               text: '开始',
@@ -221,6 +238,15 @@ export default defineConfig({
               ]
             },
             {
+              text: 'v3.0 草案（未冻结）',
+              items: [
+                { text: '草案概览', link: '/zh/whitepaper/v3.0/' },
+                { text: '技术白皮书草案', link: '/zh/whitepaper/v3.0/foggy-data-mcp-technical-whitepaper-v3.0' },
+                { text: '候选能力对照', link: '/zh/whitepaper/v3.0/compatibility-matrix' },
+                { text: '草案发布说明', link: '/zh/whitepaper/v3.0/v3.0-release-note' }
+              ]
+            },
+            {
               text: 'v1.0',
               items: [
                 { text: '概览', link: '/zh/whitepaper/v1.0/' },
@@ -251,6 +277,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Quick Start', link: '/en/mcp/guide/quick-start' },
+          { text: 'Implementation', link: '/en/implementation/' },
           {
             text: 'Docs',
             items: [
@@ -258,7 +285,8 @@ export default defineConfig({
               { text: 'Dataset Query', link: '/en/dataset-query/guide/introduction' },
               { text: 'Dataset Modeling', link: '/en/dataset-model/guide/introduction' },
               { text: 'MCP Service', link: '/en/mcp/guide/introduction' },
-              { text: 'Technical Blog', link: '/en/blog/' }
+              { text: 'Technical Blog', link: '/en/blog/' },
+              { text: 'LLM Semantic Layer Whitepaper', link: '/en/whitepaper/' }
             ]
           },
           languageSwitch,
@@ -272,6 +300,22 @@ export default defineConfig({
           }
         ],
         sidebar: {
+          '/en/implementation/': [
+            {
+              text: 'Implementation Manual',
+              items: [
+                { text: 'Scope and Delivery Boundaries', link: '/en/implementation/' },
+                { text: 'Runtime Quick Deployment', link: '/en/implementation/quick-start' },
+                { text: 'Capability Baseline and Evidence', link: '/en/implementation/capability-matrix' },
+                { text: 'Runtime API Operations', link: '/en/implementation/runtime-api' },
+                { text: 'Runtime API and MCP Examples', link: '/en/implementation/runtime-api-examples' },
+                { text: 'MCP Tools and Query Routing', link: '/en/implementation/mcp-operations' },
+                { text: 'Model and Bundle Lifecycle', link: '/en/implementation/model-lifecycle' },
+                { text: 'Security and Governance', link: '/en/implementation/security-governance' },
+                { text: 'Operations Runbook', link: '/en/implementation/operations-runbook' }
+              ]
+            }
+          ],
           '/en/fsscript/': [
             {
               text: 'Getting Started',
@@ -397,6 +441,37 @@ export default defineConfig({
                 { text: 'Claude Desktop', link: '/en/mcp/integration/claude-desktop' },
                 { text: 'Cursor', link: '/en/mcp/integration/cursor' },
                 { text: 'API Usage', link: '/en/mcp/integration/api' }
+              ]
+            }
+          ],
+          '/en/whitepaper/': [
+            {
+              text: 'LLM Semantic Layer Whitepaper',
+              items: [
+                { text: 'Version index', link: '/en/whitepaper/' }
+              ]
+            },
+            {
+              text: 'v2.0',
+              items: [
+                { text: 'Overview', link: '/en/whitepaper/v2.0/' },
+                { text: 'Release note', link: '/en/whitepaper/v2.0/v2.0-release-note' },
+                { text: 'Technical whitepaper', link: '/en/whitepaper/v2.0/foggy-data-mcp-technical-whitepaper-v2.0' },
+                { text: 'DSL_CTE reference', link: '/en/whitepaper/v2.0/dsl-cte-capability-reference' },
+                { text: 'Governed Expression reference', link: '/en/whitepaper/v2.0/governed-expression-reference' },
+                { text: 'Memory Grid reference', link: '/en/whitepaper/v2.0/memory-grid-reference' },
+                { text: 'Pivot v2 reference', link: '/en/whitepaper/v2.0/pivot-v2-reference' },
+                { text: 'Experience Recipe reference', link: '/en/whitepaper/v2.0/experience-recipe-reference' },
+                { text: 'v1/v2 capability matrix', link: '/en/whitepaper/v2.0/compatibility-matrix' }
+              ]
+            },
+            {
+              text: 'v3.0 Draft (not frozen)',
+              items: [
+                { text: 'Draft overview', link: '/en/whitepaper/v3.0/' },
+                { text: 'Technical whitepaper draft', link: '/en/whitepaper/v3.0/foggy-data-mcp-technical-whitepaper-v3.0' },
+                { text: 'Candidate capability matrix', link: '/en/whitepaper/v3.0/compatibility-matrix' },
+                { text: 'Draft release note', link: '/en/whitepaper/v3.0/v3.0-release-note' }
               ]
             }
           ],

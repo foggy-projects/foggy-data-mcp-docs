@@ -15,181 +15,350 @@ const content = computed(() => {
   if (isZh.value) {
     return {
       className: 'foggy-home-zh',
-      h1: '打通 AI 与业务数据的最后一公里',
-      lead: 'Foggy Data MCP 用 TM/QM 语义模型、JSON Query DSL、MCP 工具和查询证据，把自然语言分析请求收敛为可建模、可校验、可执行、可审计的查询工作流。',
+      kicker: 'SEMANTIC MODELING / 9.2.0',
+      h1: '把分散的数据库表，组织成 AI 能理解的领域模型',
+      lead: 'Foggy 先用 TM 将物理结构转换为领域语义，再用 QM 组合多个 TM，形成集中、可治理的业务分析模型，最后通过 MCP 和 Query DSL 交付给 LLM。',
       actions: [
-        ['阅读白皮书 v1.0', withBase('/zh/whitepaper/v1.0/'), 'foggy-button-primary'],
-        ['快速开始', withBase('/zh/mcp/guide/quick-start.html'), 'foggy-button-secondary'],
-        ['GitHub', 'https://github.com/foggy-projects/foggy-data-mcp-bridge', 'foggy-button-ghost']
+        { text: '查看 TM/QM 建模', href: withBase('/zh/dataset-model/guide/concepts.html'), kind: 'foggy-button-primary' },
+        { text: '开始建模', href: withBase('/zh/dataset-model/guide/quick-start.html'), kind: 'foggy-button-secondary' },
+        { text: 'GitHub', href: 'https://github.com/foggy-projects/foggy-data-mcp-bridge', kind: 'foggy-button-ghost', external: true }
       ],
-      trust: ['语义模型', '结构化 DSL', '权限注入', '查询证据'],
+      heroMeta: ['TM 建立领域语义', 'QM 组合业务模型', 'MCP 交付给 LLM'],
       proof: [
-        ['TM/QM', '业务语义和物理模型分离'],
-        ['JSON DSL', '结构化查询契约'],
-        ['MCP', 'AI 工具接入层'],
-        ['Java / Python', '双语言实现路径']
+        ['TM', '从表结构到领域语义'],
+        ['QM', '从多个 TM 到集中模型'],
+        ['MCP', '把模型能力交付给 AI'],
+        ['9.2.0', '当前稳定运行版本']
       ],
-      whyTitle: '问题不是“AI 会不会写 SQL”，而是 SQL 不是稳定的 AI 合约。',
-      whyBody: '直接把 schema、字段、JOIN 路径和权限口径交给模型，会让提示词变成脆弱的数据库接口。Foggy 把这些边界前移到语义模型和查询引擎中，让 AI 面向业务字段发起查询，而不是临时拼接数据库细节。',
-      contrast: [
-        ['Direct SQL Prompt', 'schema 暴露、方言脆弱、权限漂移、指标口径不一致'],
-        ['Foggy Contract', '模型发现、字段校验、权限注入、引擎生成 SQL、证据留存']
+      heroVisual: {
+        eyebrow: 'SCHEMA → DOMAIN → LLM',
+        sourceLabel: 'PHYSICAL SCHEMA',
+        sourceName: '分散的业务表',
+        sourceItems: ['t_order', 't_order_item', 't_customer', 't_product'],
+        tmLabel: 'TM / DOMAIN SEMANTICS',
+        tmName: '领域语义单元',
+        tmItems: ['客户', '订单', '产品', '销售金额'],
+        qmLabel: 'QM / BUSINESS MODEL',
+        qmName: '销售分析 QM',
+        qmItems: ['客户 · 区域 · 产品', '订单日期 · 销售额'],
+        llmLabel: 'LLM QUESTION',
+        llmText: '本月各区域的销售额？',
+        footer: 'LLM 面向业务概念，不需要理解原始表之间的关联路径。'
+      },
+      introLabel: 'WHY SEMANTIC MODELING',
+      introTitle: 'LLM 不需要更多表结构，它需要更清晰的业务世界。',
+      introBody: '真正需要交付给 LLM 的，不是字段名、外键和一张完整的 schema，而是经过组织的业务概念、指标口径、分析关系和可见边界。Foggy 把这次转换变成可维护的建模工作流。',
+      introPoints: [
+        ['01', '把数据说成业务', '将字段、枚举和计算规则表达为实体、维度、指标和业务描述。'],
+        ['02', '把关联藏在模型里', '通过 QM 组合多个 TM，让 AI 面向一个完整领域提问，而不是拼接原始 JOIN。'],
+        ['03', '把能力交付给 AI', '模型可被发现、描述、校验和调用，成为 LLM 稳定的查询边界。']
       ],
-      lifecycleTitle: '从 AI 请求到查询证据，一条受治理的分析流水线。',
+      layerLabel: 'THE MODELING STACK',
+      layerTitle: 'TM 和 QM，分别完成两次关键的语义转换。',
+      layerBody: 'TM 建立领域语义单元，QM 将这些单元组合成面向业务问题的统一模型。AI 的主要认知对象是 QM，而不是数据库中的原始表。',
+      layers: [
+        ['TM', '领域语义单元', '把物理表、字段和基础关系映射为实体、维度、指标与业务口径。', '表结构 → 领域语义', withBase('/zh/dataset-model/tm-qm/tm-syntax.html')],
+        ['QM', '集中化业务模型', '组合多个 TM，封装语义 Join，定义业务分析可以使用的维度和指标。', '多个 TM → 业务领域', withBase('/zh/dataset-model/tm-qm/qm-syntax.html')],
+        ['MCP', 'LLM 交付接口', '让 AI 发现可用 QM、读取模型描述，并以结构化方式提出和执行查询。', '业务模型 → AI 工具', withBase('/zh/mcp/tools/overview.html')]
+      ],
+      layerLinkText: '查看模型参考',
+      exampleLabel: 'FROM TABLES TO A DOMAIN MODEL',
+      exampleTitle: '一个销售问题，背后是一套被组织好的领域模型。',
+      exampleBody: 'Foggy 不要求 LLM 记住订单、订单明细、客户和产品的连接方式。它只需要理解销售分析 QM 暴露的业务概念。',
+      example: {
+        sourceLabel: '原始表结构',
+        sourceItems: ['t_order.customer_id', 't_order_item.amount', 't_order.created_at', 't_product.category'],
+        tmLabel: 'TM 领域语义',
+        tmItems: ['客户', '销售金额', '下单时间', '产品分类'],
+        qmLabel: 'QM 业务分析面',
+        qmItems: ['维度：区域 / 产品 / 月份', '指标：销售额 / 订单数 / 客单价', '关系：由模型封装'],
+        question: '查询本月各区域的销售额，并按销售额降序排列。'
+      },
+      architectureLabel: 'ARCHITECTURE',
+      architectureTitle: '让每一层只承担它应该承担的语义责任。',
+      architecture: [
+        ['01', 'Physical Schema', '表、字段、原始关系', '数据源提供事实，但不直接成为 LLM 的认知界面。'],
+        ['02', 'TM', '领域语义单元', '将底层结构翻译成实体、维度、指标和业务定义。'],
+        ['03', 'QM', '集中化业务模型', '跨 TM 组合出完整领域，隐藏物理 Join，收敛可分析范围。'],
+        ['04', 'MCP + Query DSL', '模型交付与查询契约', 'LLM 发现模型、读取描述、生成结构化查询并获得证据。'],
+        ['05', 'Runtime', '校验、执行与治理', '处理权限、方言、查询执行和结果追溯。']
+      ],
+      lifecycleLabel: 'MODEL-TO-ANSWER',
+      lifecycleTitle: '从建模到回答，AI 始终沿着业务语义工作。',
       lifecycle: [
-        ['01', '语义建模', '用 TM/QM 定义表、维度、度量、字段暴露和权限边界。', withBase('/zh/dataset-model/guide/introduction.html')],
-        ['02', '模型发现', 'AI 先获取可访问模型和字段说明，而不是读取完整数据库 schema。', withBase('/zh/mcp/tools/metadata.html')],
-        ['03', 'DSL 查询', '查询意图以 JSON DSL 表达，便于校验、记录、复用和回放。', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],
-        ['04', '执行与证据', '引擎生成目标方言 SQL，执行后保留 DSL、SQL 和结果摘要。', withBase('/zh/whitepaper/v1.0/foggy-data-mcp-technical-whitepaper.html')]
+        ['01', '识别数据结构', '盘点表、字段、枚举和原始关系，确定需要建模的业务域。', withBase('/zh/dataset-model/guide/introduction.html')],
+        ['02', '建立 TM', '把底层数据对象转化为可解释的实体、维度、指标和基础口径。', withBase('/zh/dataset-model/tm-qm/tm-syntax.html')],
+        ['03', '组合 QM', '跨 TM 建立语义关联，组织面向销售、客户或经营分析的统一模型。', withBase('/zh/dataset-model/tm-qm/qm-syntax.html')],
+        ['04', '交付给 LLM', 'AI 发现并读取 QM，通过 MCP 和 Query DSL 提出结构化查询。', withBase('/zh/mcp/tools/metadata.html')],
+        ['05', '校验并执行', 'Runtime 负责权限、查询执行和证据留存，返回可解释的结果。', withBase('/zh/whitepaper/v2.0/')]
       ],
-      docsTitle: '白皮书 v1.0 已冻结，后续只修正错误口径。',
-      docsBody: '当前公开版本聚焦已经实现和验证的语义建模、DSL 查询、Compose 组合式分析、治理和证据能力。Virtual Semantic SQL 等方向进入后续版本路线图。',
+      docsLabel: 'PUBLIC CONTRACTS / STABLE 9.2.0',
+      docsTitle: '先从语义建模开始，再让 AI 使用模型。',
+      docsBody: 'v1.0 和 v2.0 公开契约保持稳定；v3.0 仍处于 Draft / Not Frozen 状态。实施手册和版本材料继续按确认后的公开范围发布。',
       docs: [
-        ['技术博客系列', withBase('/zh/blog/enterprise-ai-data-governance-series.html')],
-        ['白皮书 v1.0', withBase('/zh/whitepaper/v1.0/')],
-        ['TM/QM 定义总览', withBase('/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html')],
-        ['DSL 语法参考', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],
-        ['预聚合能力参考', withBase('/zh/whitepaper/v1.0/pre-aggregation-reference.html')]
+        ['TM/QM 建模指南', withBase('/zh/dataset-model/guide/concepts.html')],
+        ['TM 语法参考', withBase('/zh/dataset-model/tm-qm/tm-syntax.html')],
+        ['QM 语法参考', withBase('/zh/dataset-model/tm-qm/qm-syntax.html')],
+        ['v2.0 白皮书', withBase('/zh/whitepaper/v2.0/')],
+        ['MCP 工具说明', withBase('/zh/mcp/tools/overview.html')]
       ]
     }
   }
 
   return {
-    className: '',
-    h1: 'Put a governed semantic engine between AI and business data.',
-    lead: 'Foggy Data MCP turns AI analysis requests into model-aware, permission-aware, executable query workflows using TM/QM semantic models, JSON Query DSL, MCP tools, and query evidence.',
+    className: 'foggy-home-en',
+    kicker: 'SEMANTIC MODELING / 9.2.0',
+    h1: 'Turn scattered database tables into a domain model AI can understand',
+    lead: 'Foggy uses TM to turn physical structure into domain semantics, QM to compose multiple TMs into a focused business model, and MCP plus Query DSL to deliver that model to LLMs.',
     actions: [
-      ['Read v1.0 Whitepaper', withBase('/zh/whitepaper/v1.0/'), 'foggy-button-primary'],
-      ['中文快速开始', withBase('/zh/mcp/guide/quick-start.html'), 'foggy-button-secondary'],
-      ['English Docs', withBase('/en/mcp/guide/quick-start.html'), 'foggy-button-ghost']
+      { text: 'Explore TM/QM Modeling', href: withBase('/en/dataset-model/guide/concepts.html'), kind: 'foggy-button-primary' },
+      { text: 'Start Modeling', href: withBase('/en/dataset-model/guide/quick-start.html'), kind: 'foggy-button-secondary' },
+      { text: 'GitHub', href: 'https://github.com/foggy-projects/foggy-data-mcp-bridge', kind: 'foggy-button-ghost', external: true }
     ],
-    trust: ['Semantic Models', 'Structured DSL', 'Permission Injection', 'Query Evidence'],
+    heroMeta: ['TM builds domain semantics', 'QM composes business models', 'MCP delivers models to LLMs'],
     proof: [
-      ['TM/QM', 'Semantic model boundary'],
-      ['JSON DSL', 'Structured query contract'],
-      ['MCP', 'AI tool access layer'],
-      ['Java / Python', 'Two implementation paths']
+      ['TM', 'Schema to domain semantics'],
+      ['QM', 'Multiple TMs to one model'],
+      ['MCP', 'Model delivery for AI'],
+      ['9.2.0', 'Current stable runtime']
     ],
-    whyTitle: 'The issue is not whether an LLM can write SQL. It is whether SQL is the right AI contract.',
-    whyBody: 'Raw SQL prompts expose schema details, blur permission boundaries, and force business metrics into fragile prompt text. Foggy moves those responsibilities into semantic models and the query engine, so AI works through governed business fields instead of ad hoc database internals.',
-    contrast: [
-      ['Direct SQL Prompt', 'schema leakage, dialect fragility, permission drift, ambiguous metrics'],
-      ['Foggy Contract', 'model discovery, field validation, permission injection, engine-generated SQL, query evidence']
+    heroVisual: {
+      eyebrow: 'SCHEMA → DOMAIN → LLM',
+      sourceLabel: 'PHYSICAL SCHEMA',
+      sourceName: 'Scattered business tables',
+      sourceItems: ['t_order', 't_order_item', 't_customer', 't_product'],
+      tmLabel: 'TM / DOMAIN SEMANTICS',
+      tmName: 'Domain semantic units',
+      tmItems: ['Customer', 'Order', 'Product', 'Sales amount'],
+      qmLabel: 'QM / BUSINESS MODEL',
+      qmName: 'Sales Analysis QM',
+      qmItems: ['Customer · Region · Product', 'Order date · Sales'],
+      llmLabel: 'LLM QUESTION',
+      llmText: 'Sales by region this month?',
+      footer: 'The LLM works with business concepts, not raw table join paths.'
+    },
+    introLabel: 'WHY SEMANTIC MODELING',
+    introTitle: 'LLMs do not need more schema. They need a clearer business world.',
+    introBody: 'What should be delivered to an LLM is not a complete database schema of columns and foreign keys. It is an organized set of business concepts, metric definitions, analytical relationships, and visibility boundaries. Foggy turns that translation into a maintainable modeling workflow.',
+    introPoints: [
+      ['01', 'Speak in business terms', 'Express fields, enums, and calculations as entities, dimensions, measures, and business definitions.'],
+      ['02', 'Hide the join maze', 'Compose multiple TMs through QM so AI reasons over one domain instead of assembling raw joins.'],
+      ['03', 'Deliver a usable contract', 'Make models discoverable, describable, validatable, and callable as a stable query boundary.']
     ],
-    lifecycleTitle: 'A governed analysis workflow from AI request to query evidence.',
+    layerLabel: 'THE MODELING STACK',
+    layerTitle: 'TM and QM perform two essential semantic transformations.',
+    layerBody: 'TM establishes domain semantic units. QM composes those units into a business model for real questions. The LLM primarily sees QM, not the raw database tables.',
+    layers: [
+      ['TM', 'Domain semantic units', 'Map physical tables, fields, and basic relationships into entities, dimensions, measures, and business definitions.', 'Schema → domain semantics', withBase('/en/dataset-model/tm-qm/tm-syntax.html')],
+      ['QM', 'Focused business model', 'Compose multiple TMs, encapsulate semantic joins, and define the dimensions and measures available for analysis.', 'Multiple TMs → business domain', withBase('/en/dataset-model/tm-qm/qm-syntax.html')],
+      ['MCP', 'Model delivery for LLMs', 'Let AI discover accessible QMs, read model descriptions, and submit structured queries.', 'Business model → AI tools', withBase('/en/mcp/tools/overview.html')]
+    ],
+    layerLinkText: 'Read the model reference',
+    exampleLabel: 'FROM TABLES TO A DOMAIN MODEL',
+    exampleTitle: 'One sales question rests on a deliberately organized domain model.',
+    exampleBody: 'Foggy does not ask the LLM to remember how orders, order items, customers, and products connect. It only needs to understand the business concepts exposed by the Sales Analysis QM.',
+    example: {
+      sourceLabel: 'Physical tables',
+      sourceItems: ['t_order.customer_id', 't_order_item.amount', 't_order.created_at', 't_product.category'],
+      tmLabel: 'TM domain semantics',
+      tmItems: ['Customer', 'Sales amount', 'Order date', 'Product category'],
+      qmLabel: 'QM analysis surface',
+      qmItems: ['Dimensions: region / product / month', 'Measures: sales / orders / average order value', 'Relationships: encapsulated by the model'],
+      question: 'Show monthly sales by region, ordered from highest to lowest.'
+    },
+    architectureLabel: 'ARCHITECTURE',
+    architectureTitle: 'Give every layer the semantic responsibility it should own.',
+    architecture: [
+      ['01', 'Physical Schema', 'Tables, fields, raw relationships', 'The data source provides facts, but should not become the LLM’s cognitive interface.'],
+      ['02', 'TM', 'Domain semantic units', 'Translate physical structure into entities, dimensions, measures, and definitions.'],
+      ['03', 'QM', 'Focused business model', 'Compose across TMs, hide physical joins, and narrow the analysis surface.'],
+      ['04', 'MCP + Query DSL', 'Model delivery and query contract', 'Let the LLM discover models, read descriptions, and submit structured queries with evidence.'],
+      ['05', 'Runtime', 'Validation, execution, and governance', 'Handle permissions, dialects, query execution, and traceability.']
+    ],
+    lifecycleLabel: 'MODEL-TO-ANSWER',
+    lifecycleTitle: 'From modeling to answers, AI stays inside the business vocabulary.',
     lifecycle: [
-      ['01', 'Semantic Modeling', 'Define tables, dimensions, measures, exposed fields, and permission boundaries with TM/QM.', withBase('/zh/dataset-model/guide/introduction.html')],
-      ['02', 'Model Discovery', 'AI discovers accessible models and fields instead of reading the entire database schema.', withBase('/zh/mcp/tools/metadata.html')],
-      ['03', 'DSL Query', 'Intent is expressed as JSON DSL, making validation, logging, reuse, and replay practical.', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],
-      ['04', 'Execution Evidence', 'The engine generates dialect SQL and records DSL, SQL, and result summaries for review.', withBase('/zh/whitepaper/v1.0/foggy-data-mcp-technical-whitepaper.html')]
+      ['01', 'Inspect the source', 'Inventory tables, fields, enums, and raw relationships to define the business domain.', withBase('/en/dataset-model/guide/introduction.html')],
+      ['02', 'Build TM', 'Turn source objects into explainable entities, dimensions, measures, and foundational definitions.', withBase('/en/dataset-model/tm-qm/tm-syntax.html')],
+      ['03', 'Compose QM', 'Connect TMs semantically and shape a unified model for sales, customer, or operational analysis.', withBase('/en/dataset-model/tm-qm/qm-syntax.html')],
+      ['04', 'Deliver to the LLM', 'Let AI discover and read the QM, then submit a structured query through MCP and Query DSL.', withBase('/en/mcp/tools/metadata.html')],
+      ['05', 'Validate and execute', 'Runtime applies governance, executes the query, and returns explainable evidence.', withBase('/en/whitepaper/v2.0/')]
     ],
-    docsTitle: 'The v1.0 whitepaper is frozen as the current public contract.',
-    docsBody: 'The current public release documents implemented and verified semantic modeling, DSL query, compose analysis, governance, and evidence capabilities. Future capabilities stay in later versions and roadmap documents.',
+    docsLabel: 'PUBLIC CONTRACTS / STABLE 9.2.0',
+    docsTitle: 'Start with semantic modeling. Then let AI use the model.',
+    docsBody: 'The v1.0 and v2.0 public contracts remain stable. v3.0 is still Draft / Not Frozen. Implementation manuals and version materials will be published only within the confirmed public scope.',
     docs: [
-      ['Technical Blog', withBase('/en/blog/')],
-      ['Whitepaper v1.0', withBase('/zh/whitepaper/v1.0/')],
-      ['TM/QM Reference', withBase('/zh/whitepaper/v1.0/semantic-layer-syntax-reference.html')],
-      ['DSL Syntax', withBase('/zh/whitepaper/v1.0/query-dsl-syntax-reference.html')],
-      ['中文文档', withBase('/zh/')]
+      ['TM/QM Modeling Guide', withBase('/en/dataset-model/guide/concepts.html')],
+      ['TM Syntax Reference', withBase('/en/dataset-model/tm-qm/tm-syntax.html')],
+      ['QM Syntax Reference', withBase('/en/dataset-model/tm-qm/qm-syntax.html')],
+      ['v2.0 Whitepaper', withBase('/en/whitepaper/v2.0/')],
+      ['MCP Tool Reference', withBase('/en/mcp/tools/overview.html')]
     ]
   }
 })
-
-const dslLines = [
-  '{',
-  '  "model": "SalesAnalysisQM",',
-  '  "columns": ["brand", "sum(salesAmount)"],',
-  '  "filters": [{"field": "orderDate", "op": ">=", "value": "2026-01-01"}],',
-  '  "orderBy": [{"field": "salesAmount", "dir": "DESC"}]',
-  '}'
-]
 </script>
 
 <template>
   <div class="foggy-home" :class="content.className">
-    <section class="foggy-hero">
+    <section class="foggy-hero" aria-labelledby="foggy-home-title">
       <div class="foggy-hero-copy">
-        <div class="foggy-kicker">LLM Semantic Layer Engine</div>
-        <h1>{{ content.h1 }}</h1>
+        <div class="foggy-kicker">{{ content.kicker }}</div>
+        <h1 id="foggy-home-title">{{ content.h1 }}</h1>
         <p class="foggy-lead">{{ content.lead }}</p>
         <div class="foggy-actions">
           <a
             v-for="action in content.actions"
-            :key="action[0]"
+            :key="action.text"
             class="foggy-button"
-            :class="action[2]"
-            :href="action[1]"
-            :target="action[1].startsWith('http') ? '_blank' : undefined"
-          >{{ action[0] }}</a>
+            :class="action.kind"
+            :href="action.href"
+            :target="action.external ? '_blank' : undefined"
+            :rel="action.external ? 'noreferrer' : undefined"
+          >{{ action.text }}</a>
         </div>
-        <div class="foggy-trust-row">
-          <span v-for="item in content.trust" :key="item">{{ item }}</span>
+        <div class="foggy-hero-meta">
+          <span v-for="item in content.heroMeta" :key="item">{{ item }}</span>
         </div>
       </div>
 
-      <div class="foggy-hero-visual" aria-label="Foggy semantic query workflow">
-        <div class="foggy-console">
-          <div class="foggy-console-top">
-            <img :src="withBase('/logo.png')" alt="Foggy Data MCP logo">
-            <span>Semantic Query Console</span>
-            <b>governed</b>
+      <div class="foggy-hero-visual" aria-label="Schema to domain model to LLM flow">
+        <div class="foggy-model-canvas">
+          <div class="foggy-canvas-top">
+            <span class="foggy-canvas-mark">●</span>
+            <span>{{ content.heroVisual.eyebrow }}</span>
+            <b>MODEL FIRST</b>
           </div>
-          <div class="foggy-console-grid">
-            <div class="foggy-model-panel">
-              <span class="foggy-panel-label">MODEL</span>
-              <strong>SalesAnalysisQM</strong>
-              <p>customer · product · orderDate · salesAmount</p>
-              <div class="foggy-mini-table">
-                <span>field</span><span>visibility</span>
-                <b>customer$caption</b><em>allowed</em>
-                <b>grossMargin</b><em>allowed</em>
-                <b>raw_cost_col</b><em>hidden</em>
+          <div class="foggy-canvas-flow">
+            <div class="foggy-flow-node foggy-flow-source">
+              <span class="foggy-flow-label">{{ content.heroVisual.sourceLabel }}</span>
+              <strong>{{ content.heroVisual.sourceName }}</strong>
+              <div class="foggy-code-list">
+                <span v-for="item in content.heroVisual.sourceItems" :key="item">{{ item }}</span>
               </div>
             </div>
-            <div class="foggy-query-panel">
-              <span class="foggy-panel-label">DSL</span>
-              <div class="foggy-code">
-                <span v-for="line in dslLines" :key="line">{{ line }}</span>
+            <div class="foggy-flow-arrow"><i></i><b>map</b></div>
+            <div class="foggy-flow-node foggy-flow-tm">
+              <span class="foggy-flow-label">{{ content.heroVisual.tmLabel }}</span>
+              <strong>{{ content.heroVisual.tmName }}</strong>
+              <div class="foggy-chip-list">
+                <span v-for="item in content.heroVisual.tmItems" :key="item">{{ item }}</span>
+              </div>
+            </div>
+            <div class="foggy-flow-arrow"><i></i><b>compose</b></div>
+            <div class="foggy-flow-node foggy-flow-qm">
+              <span class="foggy-flow-label">{{ content.heroVisual.qmLabel }}</span>
+              <strong>{{ content.heroVisual.qmName }}</strong>
+              <div class="foggy-qm-fields">
+                <span v-for="item in content.heroVisual.qmItems" :key="item">{{ item }}</span>
               </div>
             </div>
           </div>
-          <div class="foggy-pipeline">
-            <span>list_models</span>
-            <i></i>
-            <span>describe_model</span>
-            <i></i>
-            <span>query_model</span>
-            <i></i>
-            <span>evidence</span>
+          <div class="foggy-canvas-query">
+            <span>{{ content.heroVisual.llmLabel }}</span>
+            <strong>“{{ content.heroVisual.llmText }}”</strong>
+            <em>→ QM</em>
           </div>
+          <p class="foggy-canvas-footer">{{ content.heroVisual.footer }}</p>
         </div>
       </div>
     </section>
 
-    <section class="foggy-proof">
+    <section class="foggy-proof" aria-label="Foggy capabilities">
       <div v-for="item in content.proof" :key="item[0]">
         <strong>{{ item[0] }}</strong>
         <span>{{ item[1] }}</span>
       </div>
     </section>
 
-    <section class="foggy-section foggy-split">
-      <div>
-        <span class="foggy-section-label">WHY IT EXISTS</span>
-        <h2>{{ content.whyTitle }}</h2>
-        <p>{{ content.whyBody }}</p>
+    <section class="foggy-section foggy-intro">
+      <div class="foggy-section-head foggy-intro-head">
+        <span class="foggy-section-label">{{ content.introLabel }}</span>
+        <h2>{{ content.introTitle }}</h2>
+        <p>{{ content.introBody }}</p>
       </div>
-      <div class="foggy-contrast">
-        <div v-for="item in content.contrast" :key="item[0]">
-          <b>{{ item[0] }}</b>
-          <span>{{ item[1] }}</span>
+      <div class="foggy-intro-points">
+        <article v-for="item in content.introPoints" :key="item[0]">
+          <span>{{ item[0] }}</span>
+          <h3>{{ item[1] }}</h3>
+          <p>{{ item[2] }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="foggy-section foggy-layer-section">
+      <div class="foggy-section-head">
+        <span class="foggy-section-label">{{ content.layerLabel }}</span>
+        <h2>{{ content.layerTitle }}</h2>
+        <p>{{ content.layerBody }}</p>
+      </div>
+      <div class="foggy-layer-grid">
+        <a v-for="item in content.layers" :key="item[0]" class="foggy-layer-card" :href="item[4]">
+          <div class="foggy-layer-top">
+            <strong>{{ item[0] }}</strong>
+            <span>{{ item[3] }}</span>
+          </div>
+          <h3>{{ item[1] }}</h3>
+          <p>{{ item[2] }}</p>
+          <span class="foggy-card-link">{{ content.layerLinkText }} <b>↗</b></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="foggy-section foggy-example-section">
+      <div class="foggy-section-head">
+        <span class="foggy-section-label">{{ content.exampleLabel }}</span>
+        <h2>{{ content.exampleTitle }}</h2>
+        <p>{{ content.exampleBody }}</p>
+      </div>
+      <div class="foggy-example-board">
+        <div class="foggy-example-column foggy-example-source">
+          <span class="foggy-example-label">{{ content.example.sourceLabel }}</span>
+          <code v-for="item in content.example.sourceItems" :key="item">{{ item }}</code>
+        </div>
+        <div class="foggy-example-bridge"><span>TM</span><i></i><span>QM</span></div>
+        <div class="foggy-example-column foggy-example-semantic">
+          <span class="foggy-example-label">{{ content.example.tmLabel }}</span>
+          <span v-for="item in content.example.tmItems" :key="item">{{ item }}</span>
+        </div>
+        <div class="foggy-example-bridge"><span>compose</span><i></i></div>
+        <div class="foggy-example-column foggy-example-qm">
+          <span class="foggy-example-label">{{ content.example.qmLabel }}</span>
+          <span v-for="item in content.example.qmItems" :key="item">{{ item }}</span>
+        </div>
+        <div class="foggy-example-question">
+          <span>LLM QUESTION</span>
+          <strong>“{{ content.example.question }}”</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="foggy-section foggy-architecture-section">
+      <div class="foggy-section-head">
+        <span class="foggy-section-label">{{ content.architectureLabel }}</span>
+        <h2>{{ content.architectureTitle }}</h2>
+      </div>
+      <div class="foggy-architecture">
+        <div class="foggy-architecture-rail" aria-label="Foggy architecture layers">
+          <div v-for="item in content.architecture" :key="item[0]" class="foggy-architecture-layer">
+            <span class="foggy-architecture-number">{{ item[0] }}</span>
+            <div>
+              <strong>{{ item[1] }}</strong>
+              <span>{{ item[2] }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="foggy-architecture-notes">
+          <article v-for="item in content.architecture" :key="item[0] + item[1]">
+            <span>{{ item[0] }}</span>
+            <p>{{ item[3] }}</p>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="foggy-section">
       <div class="foggy-section-head">
-        <span class="foggy-section-label">QUERY LIFECYCLE</span>
+        <span class="foggy-section-label">{{ content.lifecycleLabel }}</span>
         <h2>{{ content.lifecycleTitle }}</h2>
       </div>
       <div class="foggy-lifecycle">
@@ -197,18 +366,19 @@ const dslLines = [
           <span>{{ item[0] }}</span>
           <h3>{{ item[1] }}</h3>
           <p>{{ item[2] }}</p>
+          <b>↗</b>
         </a>
       </div>
     </section>
 
     <section class="foggy-section foggy-docs-band">
       <div>
-        <span class="foggy-section-label">PUBLIC CONTRACT v1.0</span>
+        <span class="foggy-section-label">{{ content.docsLabel }}</span>
         <h2>{{ content.docsTitle }}</h2>
         <p>{{ content.docsBody }}</p>
       </div>
       <div class="foggy-doc-links">
-        <a v-for="item in content.docs" :key="item[0]" :href="item[1]">{{ item[0] }}</a>
+        <a v-for="item in content.docs" :key="item[0]" :href="item[1]">{{ item[0] }} <b>↗</b></a>
       </div>
     </section>
   </div>
