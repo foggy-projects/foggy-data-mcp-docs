@@ -9,6 +9,7 @@
 | `dataset.list_models` | 首选模型发现和路由概览 | namespace |
 | `dataset.describe_model_internal` | 查看单个模型字段详情 | 模型名、namespace |
 | `dataset.query_model` | 单模型结构化查询 | 已知模型和字段 |
+| `dataset.export_image` | 真实单模型查询的表格/柱状图/折线图 PNG | 配套新版构建与 `tools/list` 发现；开发中功能 |
 | `dataset.compose_script` | Compose/跨模型/受控组合查询 | 当前 schema 支持的 Compose payload |
 | `dataset.explain_query` | 查询定义、重编译和证据解释 | query payload |
 | `dataset_nl.query` | 自然语言查询 | ChatModel/AI Provider |
@@ -23,6 +24,7 @@
 ```text
 用户问题
   ├─ 已知一个 QM、字段和过滤条件 → dataset.query_model
+  ├─ 将已知 QM 查询分享为 PNG → dataset.export_image（确认已发现）
   ├─ 需要多个模型、Join/Union 或多阶段计划 → dataset.compose_script
   ├─ 需要解释计划/SQL/物理映射 → dataset.explain_query
   ├─ 只想发现模型 → dataset.list_models
@@ -38,7 +40,18 @@
 3. 对目标模型调用 `dataset.describe_model_internal`。
 4. 先用 query validate/工具参数校验发现字段和权限问题，再 execute。
 5. 需要解释时调用 `dataset.explain_query`，把 recompiled evidence 标成“重新编译证据”。
-6. 查询完成后再选择 chart 或 export 工具。
+6. 查询 validate 后再选择 chart 或 export 工具。`dataset.export_image` 会自行执行一次受治理查询，不接收调用方提供的结果行。
+
+## 查询结果 PNG
+
+`dataset.export_image` 和 CLI `query export-image` 共用 Java 内部的表格、柱状图和折线图
+渲染器，带有中文字体，无需外部渲染服务。本功能位于 `codex/query-image-export`，发布版本
+尚未确定，不能假定已发布的 CLI `0.1.24` 支持它。使用与查询相同的 endpoint、namespace
+和调用方身份检查 `tools/list`。
+
+默认响应提供 MCP 原生 `image/png` 内容及安全元数据，CLI 将 inline PNG 保存到 `--out`。
+显式链接交付沿用部署方配置的图表存储，链接须对客户端可访问。字段 caption、单位、展示
+上限、部分结果和验证方式见[查询 PNG 示例及限制](./runtime-api-examples.md#_8-将真实查询结果导出为-png)。
 
 ## namespace 与权限
 

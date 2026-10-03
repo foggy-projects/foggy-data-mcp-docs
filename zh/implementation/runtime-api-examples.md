@@ -1,6 +1,6 @@
 ---
 title: Runtime API 与 MCP 示例
-last_reviewed: 2026-08-22
+last_reviewed: 2026-10-03
 status: working-manual
 ---
 
@@ -199,7 +199,106 @@ curl -fsS -X POST "$BASE_URL/mcp/analyst/rpc" \
 - 解释查询：`dataset.explain_query`，把 `RECOMPILED` 标注为重新编译证据。
 - `dataset.get_metadata` 已被标记 Deprecated；不要在新客户端首轮调用它。
 
-## 8. 证据保存与失败处置
+## 8. 将真实查询结果导出为 PNG
+
+`dataset.export_image` 执行一次受治理的 QueryModel 查询，在 Java Runtime 内渲染表格、
+柱状图或折线图。CLI `query export-image` 调用同一个 MCP 工具，复用 Java2D/XChart
+和随包交付的中文字体，无需 Docker、浏览器、Node、外部渲染服务或 AI 绘画模型。
+本次不包含 Python Runtime 支持。
+
+::: info 开发中功能
+本功能目前位于 Java Runtime 和 CLI 的 `codex/query-image-export` 分支，发布版本尚未确定。
+不能假定已发布的 CLI `0.1.24` 包含它。需使用配套新版构建，并确认所选 endpoint 的
+`tools/list` 暴露 `dataset.export_image`。CLI 自动执行工具发现；缺失时返回
+`UNSUPPORTED_IMAGE_TOOL`，exit `3`，不要改走私有端点或伪造结果行。
+:::
+
+沿用普通查询的 `X-NS` 和可选的完整 opaque `Authorization`。CLI 可使用已有
+`FOGGY_RUNTIME_AUTHORIZATION` 环境变量，避免把凭据写入 payload 文件和示例。
+模型、行、语义字段和物理列权限仍由原查询链路校验；空结果或权限拒绝不生成图片。
+标题和 caption 只放展示文字，不放 token、连接串和运行参数。
+
+先 describe 目标 QM，再 validate 查询 DSL。下例假设模型真实提供 `month` 和
+`salesAmount`，必须替换为 describe 字段或最终聚合 alias，不保证前文 sales-drop 模型已提供。
+将以下 DSL 单独保存为 `monthly-sales.json`：
+
+```json
+{
+  "columns": ["month", "salesAmount"],
+  "orderBy": [{"field": "month", "dir": "asc"}],
+  "limit": 40
+}
+```
+
+输出目录需已存在。执行表格命令前，先将下方含 caption/单位的字段配置保存为 `columns.json`：
+
+```bash
+foggy-runtime --base-url "$BASE_URL" --namespace "$NS" query export-image <QueryModel> --payload monthly-sales.json --kind table --columns columns.json --title "月度销售明细" --out sales-table.png
+foggy-runtime --base-url "$BASE_URL" --namespace "$NS" query export-image <QueryModel> --payload monthly-sales.json --kind bar --x month --y salesAmount --y-label "销售额" --unit "元" --title "月度销售额" --out sales-bar.png
+foggy-runtime --base-url "$BASE_URL" --namespace "$NS" query export-image <QueryModel> --payload monthly-sales.json --kind line --x month --y salesAmount --y-label "销售额" --unit "元" --title "销售额趋势" --out sales-line.png
+```
+
+表格可通过 `--columns columns.json` 选择并标注最终结果字段：
+
+```json
+[
+  {"field": "month", "caption": "月份"},
+  {"field": "salesAmount", "caption": "销售额", "unit": "元"}
+]
+```
+
+caption 默认取查询 schema 标题，再回退字段名。单位须明确提供，不猜测，也不缩放数值。
+图表必须用 `--x`、`--y` 指定分类字段和一个数值结果字段；渲染保留查询顺序和数值，
+排序、聚合和日期补齐由 DSL 完成。表格 null 显示为横线，折线图 null 保留空隙。
+
+MCP 客户端沿用发现阶段的请求头，提交以下 `tools/call`：
+
+```json
+{
+  "jsonrpc": "2.0", "id": 4, "method": "tools/call",
+  "params": {
+    "name": "dataset.export_image",
+    "arguments": {
+      "model": "<QueryModel>",
+      "payload": {
+        "columns": ["month", "salesAmount"],
+        "orderBy": [{"field": "month", "dir": "asc"}],
+        "limit": 40
+      },
+      "kind": "bar", "xField": "month", "yField": "salesAmount",
+      "title": "月度销售额", "yLabel": "销售额", "unit": "元",
+      "delivery": "inline"
+    }
+  }
+}
+```
+
+默认 `inline` 响应包含 MCP 原生图片内容：
+`{type: "image", mimeType: "image/png", data: "<Base64 PNG>"}`。
+文本和 `structuredContent` 提供安全的图片元数据、`rowsRendered`、`rowsReturned`、
+`truncated`，不重复放入 Base64。可选的 `delivery: "link"` 复用现有图表存储；
+部署方需配置客户端可访问的 URL 及其访问策略。inline 不要求公开图片存储，CLI 请求
+inline PNG，不下载 URL。
+
+| 项目 | 限制 |
+| --- | --- |
+| 表格 | 50 行、12 列；长文字换行并自动增高 |
+| 柱状图 / 折线图 | 单系列，40 / 100 个点 |
+| 宽度 | 640–2400 px，默认 1200 |
+| 高度 | 请求表格高度 360–2400 px，自动输出最多 4096；图表 520–2400 px，默认 700 |
+| PNG | 最多 800 万像素、8 MiB |
+| 字号 | 标题 28 px；表头、正文及轴名称 18 px；刻度 16 px；页脚 14 px |
+
+`--max-rows` 可降低展示上限。查询分页、引擎截断或展示上限都会在图片和元数据中标明
+部分结果，不能当作全部数据。不支持的字体字符、无法清晰容纳的排版会明确失败，不无限
+缩小字号。目前支持一个 flat QueryModel 结果，不支持 Compose 多结果、tree/grid Pivot、
+连续时间/数值轴或报表设计器。
+
+CLI 校验 PNG 内容后原子替换 `--out`，失败保留原文件。JSON 输出包含文件、尺寸、大小
+和行数元数据，不输出图片 Base64 或运行凭据。保留该 JSON，分享前查看每张实际 PNG 的
+中文、标题、字段名称、单位、间距和部分结果说明。
+
+## 9. 证据保存与失败处置
 
 至少保存以下 JSON：capabilities、datasource test、datasource diagnostics、model validate、bundles、model refresh、models list/describe、query validate/execute。失败时记录 namespace、Runtime API/schema、请求 path、退出码和响应中的 error code/phase。
 

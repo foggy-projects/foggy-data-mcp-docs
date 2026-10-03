@@ -9,6 +9,7 @@ Use `tools/list` from the running endpoint as the final source of truth. The cur
 | `dataset.list_models` | Preferred model discovery and routing overview | namespace |
 | `dataset.describe_model_internal` | Detailed fields for one model | model name, namespace |
 | `dataset.query_model` | Structured single-model query | known model and fields |
+| `dataset.export_image` | Table/bar/line PNG from a real single-model query | Matching new build and `tools/list` discovery; development feature |
 | `dataset.compose_script` | Compose/cross-model/governed composition | supported Compose payload |
 | `dataset.explain_query` | Query definition, recompilation, and evidence | query payload |
 | `dataset_nl.query` | Natural-language query | ChatModel/AI Provider |
@@ -23,6 +24,7 @@ Use `tools/list` from the running endpoint as the final source of truth. The cur
 ```text
 User question
   ├─ one known QM, fields, and filters → dataset.query_model
+  ├─ share one known QM query as PNG → dataset.export_image (when discovered)
   ├─ multiple models, Join/Union, or multi-stage plan → dataset.compose_script
   ├─ plan/SQL/physical mapping evidence → dataset.explain_query
   ├─ model discovery → dataset.list_models
@@ -38,7 +40,22 @@ User question
 3. Call `dataset.describe_model_internal` for the target model.
 4. Validate the query before execution to catch field, schema, and policy errors.
 5. Call `dataset.explain_query` when an explanation is required, labeling recompiled evidence as such.
-6. Choose a chart or export tool only after the query succeeds.
+6. Choose a chart or export tool after the query is validated. `dataset.export_image` executes its own governed query once; it does not accept caller-supplied result rows.
+
+## Query result PNGs
+
+`dataset.export_image` and CLI `query export-image` share an in-process Java
+renderer for tables, bar charts and line charts, with bundled Chinese fonts and
+no external render service. This feature is on `codex/query-image-export`;
+its release version is not assigned, and published CLI `0.1.24` must not be
+assumed to support it. Check `tools/list` using the same endpoint, namespace and
+caller identity as the query.
+
+The default response carries native MCP `image/png` content and safe metadata;
+CLI saves the inline PNG to `--out`. Explicit link delivery uses deployment-
+configured chart storage and must be accessible to the client. See
+[query PNG examples and limits](./runtime-api-examples.md#_8-export-a-real-query-result-as-png)
+for field captions, units, display limits, partial results and validation.
 
 ## Namespace and authorization
 
